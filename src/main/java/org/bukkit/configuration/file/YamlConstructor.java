@@ -3,6 +3,7 @@ package org.bukkit.configuration.file;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -13,6 +14,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 public class YamlConstructor extends SafeConstructor {
 
     public YamlConstructor() {
+        super(new LoaderOptions());
         this.yamlConstructors.put(Tag.MAP, new ConstructCustomObject());
     }
 
@@ -26,7 +28,7 @@ public class YamlConstructor extends SafeConstructor {
             Map<?, ?> raw = (Map<?, ?>) super.construct(node);
 
             if (raw.containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
-                Map<String, Object> typed = new LinkedHashMap<String, Object>(raw.size());
+                Map<String, Object> typed = new LinkedHashMap<>(raw.size());
                 for (Map.Entry<?, ?> entry : raw.entrySet()) {
                     typed.put(entry.getKey().toString(), entry.getValue());
                 }
