@@ -1,14 +1,5 @@
 package org.bukkit.configuration.serialization;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -18,13 +9,22 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.Vector;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Utility class for storing and retrieving classes for {@link Configuration}.
  */
 public class ConfigurationSerialization {
 	public static final String SERIALIZED_TYPE_KEY = "==";
 	private final Class<? extends ConfigurationSerializable> clazz;
-	private static Map<String, Class<? extends ConfigurationSerializable>> aliases = new HashMap<String, Class<? extends ConfigurationSerializable>>();
+	private static final Map<String, Class<? extends ConfigurationSerializable>> aliases = new HashMap<>();
 
 	static {
 		registerClass(Vector.class);
@@ -51,9 +51,7 @@ public class ConfigurationSerialization {
 			}
 
 			return method;
-		} catch (NoSuchMethodException ex) {
-			return null;
-		} catch (SecurityException ex) {
+		} catch (NoSuchMethodException | SecurityException ex) {
 			return null;
 		}
 	}
@@ -61,9 +59,7 @@ public class ConfigurationSerialization {
 	protected Constructor<? extends ConfigurationSerializable> getConstructor() {
 		try {
 			return clazz.getConstructor(Map.class);
-		} catch (NoSuchMethodException ex) {
-			return null;
-		} catch (SecurityException ex) {
+		} catch (NoSuchMethodException | SecurityException ex) {
 			return null;
 		}
 	}
@@ -73,7 +69,7 @@ public class ConfigurationSerialization {
 			ConfigurationSerializable result = (ConfigurationSerializable) method.invoke(null, args);
 
 			if (result == null) {
-				Logger.getLogger(ConfigurationSerialization.class.getName()).log(Level.SEVERE, "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization: method returned null");
+				Logger.getLogger(ConfigurationSerialization.class.getName()).log(Level.SEVERE, "Could not call method '" + method + "' of " + clazz + " for deserialization: method returned null");
 			} else {
 				return result;
 			}
@@ -238,7 +234,6 @@ public class ConfigurationSerialization {
 	 */
 	public static void unregisterClass(Class<? extends ConfigurationSerializable> clazz) {
 		while (aliases.values().remove(clazz)) {
-			;
 		}
 	}
 

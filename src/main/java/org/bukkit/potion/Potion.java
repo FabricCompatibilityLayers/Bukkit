@@ -1,13 +1,12 @@
 package org.bukkit.potion;
 
-import java.util.Collection;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Collection;
 
 /**
  * Represents a minecraft potion
@@ -21,14 +20,15 @@ public class Potion {
 
 	/**
 	 * Construct a new potion of the given type. Unless the type is {@link
-	 * PotionType#WATER}, it will be level one, without extended duration.
-	 * Don't use this constructor to create a no-effect potion other than
+	 * PotionType#WATER}, it will be level one, without an extended duration.
+	 * Don't use this constructor to create a no-effect potion other than a
 	 * water bottle.
 	 *
 	 * @param type The potion type
 	 *
 	 * @see #Potion(int)
 	 */
+	@SuppressWarnings("deprecation")
 	public Potion(PotionType type) {
 		this.type = type;
 		if (type != null) {
@@ -42,7 +42,6 @@ public class Potion {
 	/**
 	 * @deprecated In favour of {@link #Potion(PotionType, int)}
 	 */
-	@SuppressWarnings("javadoc")
 	@Deprecated
 	public Potion(PotionType type, Tier tier) {
 		this(type, tier == Tier.TWO ? 2 : 1);
@@ -52,7 +51,6 @@ public class Potion {
 	/**
 	 * @deprecated In favour of {@link #Potion(PotionType, int, boolean)}
 	 */
-	@SuppressWarnings("javadoc")
 	@Deprecated
 	public Potion(PotionType type, Tier tier, boolean splash) {
 		this(type, tier == Tier.TWO ? 2 : 1, splash);
@@ -62,7 +60,6 @@ public class Potion {
 	 * @deprecated In favour of {@link #Potion(PotionType, int, boolean,
 	 * boolean)}
 	 */
-	@SuppressWarnings("javadoc")
 	@Deprecated
 	public Potion(PotionType type, Tier tier, boolean splash, boolean extended) {
 		this(type, tier, splash);
@@ -121,11 +118,12 @@ public class Potion {
 	 *
 	 * @param name The name index (0-63)
 	 */
+	@SuppressWarnings("deprecation")
 	public Potion(int name) {
 		this(PotionType.getByDamageValue(name & POTION_BIT));
 		this.name = name & NAME_BIT;
 		if ((name & POTION_BIT) == 0) {
-			// If it's 0 it would've become PotionType.WATER, but it should actually be mundane potion
+			// If it's 0 it would've become PotionType.WATER, but it should actually be a mundane potion
 			this.type = null;
 		}
 	}
@@ -196,8 +194,9 @@ public class Potion {
 	 * @see PotionBrewer#getEffectsFromDamage(int)
 	 * @see Potion#toDamageValue()
 	 */
+	@SuppressWarnings("deprecation")
 	public Collection<PotionEffect> getEffects() {
-		if (type == null) return ImmutableList.<PotionEffect>of();
+		if (type == null) return ImmutableList.of();
 		return getBrewer().getEffectsFromDamage(toDamageValue());
 	}
 
@@ -359,7 +358,7 @@ public class Potion {
 		ONE(0),
 		TWO(0x20);
 
-		private int damageBit;
+		private final int damageBit;
 
 		Tier(int bit) {
 			damageBit = bit;

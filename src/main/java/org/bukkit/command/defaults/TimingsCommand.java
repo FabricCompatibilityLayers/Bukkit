@@ -1,11 +1,6 @@
 package org.bukkit.command.defaults;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,7 +12,11 @@ import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.TimedRegisteredListener;
 import org.bukkit.util.StringUtil;
 
-import com.google.common.collect.ImmutableList;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TimingsCommand extends BukkitCommand {
 	private static final List<String> TIMINGS_SUBCOMMANDS = ImmutableList.of("merged", "reset", "separate");
@@ -113,7 +112,7 @@ public class TimingsCommand extends BukkitCommand {
 		Validate.notNull(alias, "Alias cannot be null");
 
 		if (args.length == 1) {
-			return StringUtil.copyPartialMatches(args[0], TIMINGS_SUBCOMMANDS, new ArrayList<String>(TIMINGS_SUBCOMMANDS.size()));
+			return StringUtil.copyPartialMatches(args[0], TIMINGS_SUBCOMMANDS, new ArrayList<>(TIMINGS_SUBCOMMANDS.size()));
 		}
 		return ImmutableList.of();
 	}

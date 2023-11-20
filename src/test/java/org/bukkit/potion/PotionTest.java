@@ -1,12 +1,12 @@
 package org.bukkit.potion;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.is;
-
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.junit.Test;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
 
 public class PotionTest {
 	@Test
@@ -14,13 +14,13 @@ public class PotionTest {
 		Potion potion = new Potion(PotionType.POISON);
 		ItemStack stack = new ItemStack(Material.POTION, 1);
 		potion.apply(stack);
-		assertTrue(stack.getDurability() == potion.toDamageValue());
+		assertEquals(stack.getDurability(), potion.toDamageValue());
 	}
 
 	@Test
 	public void fromDamage() {
 		Potion potion = Potion.fromDamage(PotionType.POISON.getDamageValue());
-		assertTrue(potion.getType() == PotionType.POISON);
+		assertSame(potion.getType(), PotionType.POISON);
 		potion = Potion.fromDamage(PotionType.POISON.getDamageValue() | SPLASH_BIT);
 		assertTrue(potion.getType() == PotionType.POISON && potion.isSplash());
 		potion = Potion.fromDamage(0x25 /* Potion of Healing II */);
@@ -38,8 +38,8 @@ public class PotionTest {
 		Potion potion = new Potion(PotionType.POISON);
 		ItemStack itemstack = potion.toItemStack(1);
 		assertThat(itemstack.getType(), is(Material.POTION));
-		assertTrue(itemstack.getAmount() == 1);
-		assertTrue(itemstack.getDurability() == potion.toDamageValue());
+		assertEquals(1, itemstack.getAmount());
+		assertEquals(itemstack.getDurability(), potion.toDamageValue());
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class PotionTest {
 		assertEquals(1, potion.getLevel());
 		potion.setLevel(2);
 		assertEquals(2, potion.getLevel());
-		assertTrue((potion.toDamageValue() & 0x3F) == (PotionType.POISON.getDamageValue() | 0x20));
+		assertEquals((potion.toDamageValue() & 0x3F), (PotionType.POISON.getDamageValue() | 0x20));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -125,8 +125,8 @@ public class PotionTest {
 	@Test
 	public void mundane() {
 		Potion potion = new Potion(0);
-		assertFalse(potion.getType() == PotionType.WATER);
-		assertFalse(potion.toDamageValue() == 0);
+		assertNotSame(potion.getType(), PotionType.WATER);
+		assertNotEquals(0, potion.toDamageValue());
 		assertEquals(8192, potion.toDamageValue());
 		Potion potion2 = Potion.fromDamage(8192);
 		assertEquals(potion, potion2);

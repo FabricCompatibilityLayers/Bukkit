@@ -1,14 +1,9 @@
 package org.bukkit.configuration;
 
-import java.util.LinkedHashMap;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.bukkit.util.Vector;
 import org.junit.Test;
+
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +11,7 @@ public abstract class ConfigurationTest {
 	public abstract Configuration getConfig();
 
 	public Map<String, Object> getTestValues() {
-		HashMap<String, Object> result = new LinkedHashMap<String, Object>();
+		HashMap<String, Object> result = new LinkedHashMap<>();
 
 		result.put("integer", Integer.MIN_VALUE);
 		result.put("string", "String Value");
@@ -131,7 +126,7 @@ public abstract class ConfigurationTest {
 	public void testCreateSection() {
 		Configuration config = getConfig();
 
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 		set.add("this");
 		set.add("this.test.sub");
 		set.add("this.test");

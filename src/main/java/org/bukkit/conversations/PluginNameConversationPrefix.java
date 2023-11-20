@@ -1,7 +1,6 @@
 package org.bukkit.conversations;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -14,7 +13,7 @@ public class PluginNameConversationPrefix implements ConversationPrefix {
 	protected ChatColor prefixColor;
 	protected Plugin plugin;
 
-	private String cachedPrefix;
+	private final String cachedPrefix;
 
 	public PluginNameConversationPrefix(Plugin plugin) {
 		this(plugin, " > ", ChatColor.LIGHT_PURPLE);

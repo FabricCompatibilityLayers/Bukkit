@@ -102,7 +102,7 @@ public class ConversationTest {
 		}
 	}
 
-	private class SecondPrompt extends MessagePrompt {
+	private static class SecondPrompt extends MessagePrompt {
 
 		@Override
 		protected Prompt getNextPrompt(ConversationContext context) {

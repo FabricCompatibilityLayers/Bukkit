@@ -1,18 +1,18 @@
 package org.bukkit.command.defaults;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 public class TellCommand extends VanillaCommand {
 	public TellCommand() {
 		super("tell");
 		this.description = "Sends a private message to the given player";
 		this.usageMessage = "/tell <player> <message>";
-		this.setAliases(Arrays.asList(new String[] { "w", "msg" }));
+		this.setAliases(Arrays.asList("w", "msg"));
 		this.setPermission("bukkit.command.tell");
 	}
 

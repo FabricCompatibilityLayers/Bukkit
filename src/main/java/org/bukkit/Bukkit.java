@@ -1,15 +1,6 @@
 package org.bukkit;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.logging.Logger;
-
+import com.avaje.ebean.config.ServerConfig;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
@@ -18,11 +9,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.help.HelpMap;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFactory;
-import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.*;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
@@ -31,10 +18,13 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.CachedServerIcon;
 
-import com.avaje.ebean.config.ServerConfig;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
- * Represents the Bukkit core, for version and Server singleton handling
+ * Represents the Bukkit core, for a version and Server singleton handling
  */
 public final class Bukkit {
 	private static Server server;
@@ -96,7 +86,7 @@ public final class Bukkit {
 	 * compatibility. It will not exist at runtime and should not be used
 	 * under any circumstances.
 	 *
-	 * @Deprecated
+	 * @deprecated
 	 * @see Server#_INVALID_getOnlinePlayers()
 	 */
 	@Deprecated
@@ -716,14 +706,14 @@ public final class Bukkit {
 	/**
 	 * @see Server#loadServerIcon(File)
 	 */
-	public static CachedServerIcon loadServerIcon(File file) throws IllegalArgumentException, Exception {
+	public static CachedServerIcon loadServerIcon(File file) throws Exception {
 		return server.loadServerIcon(file);
 	}
 
 	/**
 	 * @see Server#loadServerIcon(BufferedImage)
 	 */
-	public static CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception {
+	public static CachedServerIcon loadServerIcon(BufferedImage image) throws Exception {
 		return server.loadServerIcon(image);
 	}
 

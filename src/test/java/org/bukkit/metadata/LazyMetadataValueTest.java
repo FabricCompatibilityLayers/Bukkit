@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import java.util.concurrent.Callable;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class LazyMetadataValueTest {
 	private LazyMetadataValue subject;
-	private TestPlugin plugin = new TestPlugin("x");
+	private final TestPlugin plugin = new TestPlugin("x");
 
 	@Test
 	public void testLazyInt() {
@@ -121,7 +121,7 @@ public class LazyMetadataValueTest {
 		});
 	}
 
-	private class Counter {
+	private static class Counter {
 		private int c = 0;
 
 		public void increment() {

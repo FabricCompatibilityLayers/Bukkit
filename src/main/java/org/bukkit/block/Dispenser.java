@@ -1,11 +1,12 @@
 package org.bukkit.block;
 
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.projectiles.BlockProjectileSource;
 
 /**
  * Represents a dispenser.
  */
-public interface Dispenser extends BlockState, ContainerBlock {
+public interface Dispenser extends BlockState, InventoryHolder {
 
 	/**
 	 * Gets the BlockProjectileSource object for this dispenser.
@@ -14,7 +15,7 @@ public interface Dispenser extends BlockState, ContainerBlock {
 	 *
 	 * @return a BlockProjectileSource if valid, otherwise null
 	 */
-	public BlockProjectileSource getBlockProjectileSource();
+	BlockProjectileSource getBlockProjectileSource();
 
 	/**
 	 * Attempts to dispense the contents of this block.
@@ -23,5 +24,5 @@ public interface Dispenser extends BlockState, ContainerBlock {
 	 *
 	 * @return true if successful, otherwise false
 	 */
-	public boolean dispense();
+	boolean dispense();
 }

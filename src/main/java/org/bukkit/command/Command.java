@@ -1,10 +1,6 @@
 package org.bukkit.command;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,7 +11,10 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.util.StringUtil;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a Command, which executes various tasks upon user input
@@ -33,7 +32,7 @@ public abstract class Command {
 	private String permissionMessage;
 
 	protected Command(String name) {
-		this(name, "", "/" + name, new ArrayList<String>());
+		this(name, "", "/" + name, new ArrayList<>());
 	}
 
 	protected Command(String name, String description, String usageMessage, List<String> aliases) {
@@ -43,7 +42,7 @@ public abstract class Command {
 		this.description = description;
 		this.usageMessage = usageMessage;
 		this.aliases = aliases;
-		this.activeAliases = new ArrayList<String>(aliases);
+		this.activeAliases = new ArrayList<>(aliases);
 	}
 
 	/**
@@ -91,7 +90,7 @@ public abstract class Command {
 
 		Player senderPlayer = sender instanceof Player ? (Player) sender : null;
 
-		ArrayList<String> matchedPlayers = new ArrayList<String>();
+		ArrayList<String> matchedPlayers = new ArrayList<>();
 		for (Player player : sender.getServer().getOnlinePlayers()) {
 			String name = player.getName();
 			if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
@@ -243,7 +242,7 @@ public abstract class Command {
 	public boolean unregister(CommandMap commandMap) {
 		if (allowChangesFrom(commandMap)) {
 			this.commandMap = null;
-			this.activeAliases = new ArrayList<String>(this.aliases);
+			this.activeAliases = new ArrayList<>(this.aliases);
 			this.label = this.nextLabel;
 			return true;
 		}
@@ -314,7 +313,7 @@ public abstract class Command {
 	public Command setAliases(List<String> aliases) {
 		this.aliases = aliases;
 		if (!isRegistered()) {
-			this.activeAliases = new ArrayList<String>(aliases);
+			this.activeAliases = new ArrayList<>(aliases);
 		}
 		return this;
 	}
@@ -382,7 +381,7 @@ public abstract class Command {
 		}
 
 		Set<Permissible> users = Bukkit.getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
-		String colored = ChatColor.GRAY + "" + ChatColor.ITALIC + "[" + result + ChatColor.GRAY + ChatColor.ITALIC + "]";
+		String colored = String.valueOf(ChatColor.GRAY) + ChatColor.ITALIC + "[" + result + ChatColor.GRAY + ChatColor.ITALIC + "]";
 
 		if (sendToSource && !(source instanceof ConsoleCommandSender)) {
 			source.sendMessage(message);

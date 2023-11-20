@@ -1,13 +1,8 @@
 package org.bukkit.command;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.server.RemoteServerCommandEvent;
-import org.bukkit.event.server.ServerCommandEvent;
+
+import java.util.ArrayList;
 
 public class FormattedCommandAlias extends Command {
 	private final String[] formatStrings;
@@ -20,7 +15,7 @@ public class FormattedCommandAlias extends Command {
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 		boolean result = false;
-		ArrayList<String> commands = new ArrayList<String>();
+		ArrayList<String> commands = new ArrayList<>();
 		for (String formatString : formatStrings) {
 			try {
 				commands.add(buildCommand(formatString, args));
@@ -72,7 +67,7 @@ public class FormattedCommandAlias extends Command {
 				throw new IllegalArgumentException("Invalid replacement token");
 			}
 
-			int position = Integer.valueOf(formatString.substring(argStart, index));
+			int position = Integer.parseInt(formatString.substring(argStart, index));
 
 			// Arguments are not 0 indexed
 			if (position == 0) {
@@ -107,7 +102,7 @@ public class FormattedCommandAlias extends Command {
 				replacement.append(args[position]);
 			}
 
-			formatString = formatString.substring(0, start) + replacement.toString() + formatString.substring(end);
+			formatString = formatString.substring(0, start) + replacement + formatString.substring(end);
 			// Move index past the replaced data so we don't process it again
 			index = start + replacement.length();
 
@@ -118,7 +113,7 @@ public class FormattedCommandAlias extends Command {
 		return formatString;
 	}
 
-	private static boolean inRange(int i, int j, int k) {
-		return i >= j && i <= k;
+	private static boolean inRange(int value, int min, int max) {
+		return value >= min && value <= max;
 	}
 }

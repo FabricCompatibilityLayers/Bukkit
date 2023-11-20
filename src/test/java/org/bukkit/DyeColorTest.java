@@ -1,11 +1,5 @@
 package org.bukkit;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.material.Colorable;
 import org.bukkit.material.Dye;
 import org.bukkit.material.Wool;
@@ -15,12 +9,18 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 @RunWith(Parameterized.class)
 public class DyeColorTest {
 
 	@Parameters(name = "{index}: {0}")
 	public static List<Object[]> data() {
-		List<Object[]> list = new ArrayList<Object[]>();
+		List<Object[]> list = new ArrayList<>();
 		for (DyeColor dye : DyeColor.values()) {
 			list.add(new Object[] { dye });
 		}

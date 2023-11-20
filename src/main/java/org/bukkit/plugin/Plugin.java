@@ -1,15 +1,14 @@
 package org.bukkit.plugin;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.logging.Logger;
-
+import com.avaje.ebean.EbeanServer;
 import org.bukkit.Server;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 
-import com.avaje.ebean.EbeanServer;
+import java.io.File;
+import java.io.InputStream;
+import java.util.logging.Logger;
 
 /**
  * Represents a Plugin
@@ -23,14 +22,14 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return The folder
 	 */
-	public File getDataFolder();
+	File getDataFolder();
 
 	/**
 	 * Returns the plugin.yaml file containing the details for this plugin
 	 *
 	 * @return Contents of the plugin.yaml file
 	 */
-	public PluginDescriptionFile getDescription();
+	PluginDescriptionFile getDescription();
 
 	/**
 	 * Gets a {@link FileConfiguration} for this plugin, read through
@@ -41,7 +40,7 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return Plugin configuration
 	 */
-	public FileConfiguration getConfig();
+	FileConfiguration getConfig();
 
 	/**
 	 * Gets an embedded resource in this plugin
@@ -50,12 +49,12 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return File if found, otherwise null
 	 */
-	public InputStream getResource(String filename);
+	InputStream getResource(String filename);
 
 	/**
 	 * Saves the {@link FileConfiguration} retrievable by {@link #getConfig()}.
 	 */
-	public void saveConfig();
+	void saveConfig();
 
 	/**
 	 * Saves the raw contents of the default config.yml file to the location
@@ -63,7 +62,7 @@ public interface Plugin extends TabExecutor {
 	 * embedded in the plugin, an empty config.yml file is saved. This should
 	 * fail silently if the config.yml already exists.
 	 */
-	public void saveDefaultConfig();
+	void saveDefaultConfig();
 
 	/**
 	 * Saves the raw contents of any resource embedded with a plugin's .jar
@@ -80,26 +79,26 @@ public interface Plugin extends TabExecutor {
 	 * @throws IllegalArgumentException if the resource path is null, empty,
 	 *                                  or points to a nonexistent resource.
 	 */
-	public void saveResource(String resourcePath, boolean replace);
+	void saveResource(String resourcePath, boolean replace);
 
 	/**
 	 * Discards any data in {@link #getConfig()} and reloads from disk.
 	 */
-	public void reloadConfig();
+	void reloadConfig();
 
 	/**
 	 * Gets the associated PluginLoader responsible for this plugin
 	 *
 	 * @return PluginLoader that controls this plugin
 	 */
-	public PluginLoader getPluginLoader();
+	PluginLoader getPluginLoader();
 
 	/**
 	 * Returns the Server instance currently running this plugin
 	 *
 	 * @return Server running this plugin
 	 */
-	public Server getServer();
+	Server getServer();
 
 	/**
 	 * Returns a value indicating whether or not this plugin is currently
@@ -107,12 +106,12 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return true if this plugin is enabled, otherwise false
 	 */
-	public boolean isEnabled();
+	boolean isEnabled();
 
 	/**
 	 * Called when this plugin is disabled
 	 */
-	public void onDisable();
+	void onDisable();
 
 	/**
 	 * Called after a plugin is loaded but before it has been enabled.
@@ -120,26 +119,26 @@ public interface Plugin extends TabExecutor {
 	 * When mulitple plugins are loaded, the onLoad() for all plugins is
 	 * called before any onEnable() is called.
 	 */
-	public void onLoad();
+	void onLoad();
 
 	/**
 	 * Called when this plugin is enabled
 	 */
-	public void onEnable();
+	void onEnable();
 
 	/**
 	 * Simple boolean if we can still nag to the logs about things
 	 *
 	 * @return boolean whether we can nag
 	 */
-	public boolean isNaggable();
+	boolean isNaggable();
 
 	/**
 	 * Set naggable state
 	 *
 	 * @param canNag is this plugin still naggable?
 	 */
-	public void setNaggable(boolean canNag);
+	void setNaggable(boolean canNag);
 
 	/**
 	 * Gets the {@link EbeanServer} tied to this plugin. This will only be
@@ -157,7 +156,7 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return ebean server instance or null if not enabled
 	 */
-	public EbeanServer getDatabase();
+	EbeanServer getDatabase();
 
 	/**
 	 * Gets a {@link ChunkGenerator} for use in a default world, as specified
@@ -169,7 +168,7 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return ChunkGenerator for use in the default world generation
 	 */
-	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id);
+	ChunkGenerator getDefaultWorldGenerator(String worldName, String id);
 
 	/**
 	 * Returns the plugin logger associated with this server's logger. The
@@ -178,7 +177,7 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return Logger associated with this plugin
 	 */
-	public Logger getLogger();
+	Logger getLogger();
 
 	/**
 	 * Returns the name of the plugin.
@@ -188,5 +187,5 @@ public interface Plugin extends TabExecutor {
 	 *
 	 * @return name of the plugin
 	 */
-	public String getName();
+	String getName();
 }

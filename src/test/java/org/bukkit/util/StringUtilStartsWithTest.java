@@ -1,24 +1,23 @@
 package org.bukkit.util;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class StringUtilStartsWithTest {
 
 	@Parameters(name = "{index}: {0} startsWith {1} == {2}")
 	public static List<Object[]> data() {
-		return ImmutableList.<Object[]>of(
+		return ImmutableList.of(
 				new Object[] {
 						"Apple",
 						"Apples",

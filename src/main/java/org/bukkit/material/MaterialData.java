@@ -1,14 +1,14 @@
 package org.bukkit.material;
 
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Handles specific metadata for certain items or blocks
  */
 public class MaterialData implements Cloneable {
 	private final int type;
-	private byte data = 0;
+	private byte data;
 
 	/**
 	 * @deprecated Magic value
@@ -68,6 +68,7 @@ public class MaterialData implements Cloneable {
 	 *
 	 * @return Material represented by this MaterialData
 	 */
+	@SuppressWarnings("deprecation")
 	public Material getItemType() {
 		return Material.getMaterial(type);
 	}
@@ -116,7 +117,7 @@ public class MaterialData implements Cloneable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof MaterialData) {
+		if (obj instanceof MaterialData) {
 			MaterialData md = (MaterialData) obj;
 
 			return (md.getItemTypeId() == getItemTypeId() && md.getData() == getData());

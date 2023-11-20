@@ -1,9 +1,7 @@
 package org.bukkit.event.player;
 
-import org.bukkit.entity.Fish;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Cancellable;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.HandlerList;
 
 /**
@@ -12,13 +10,13 @@ import org.bukkit.event.HandlerList;
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Entity entity;
+	private final State state;
+	private final FishHook hookEntity;
 	private boolean cancel = false;
 	private int exp;
-	private final State state;
-	private final Fish hookEntity;
 
 	/**
-	 * @deprecated replaced by {@link #PlayerFishEvent(Player, Entity, Fish,
+	 * @deprecated replaced by {@link #PlayerFishEvent(Player, Entity, FishHook,
 	 * State)} to include the {@link Fish} hook entity.
 	 */
 	@Deprecated
@@ -26,11 +24,15 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		this(player, entity, null, state);
 	}
 
-	public PlayerFishEvent(final Player player, final Entity entity, final Fish hookEntity, final State state) {
+	public PlayerFishEvent(final Player player, final Entity entity, final FishHook hookEntity, final State state) {
 		super(player);
 		this.entity = entity;
 		this.hookEntity = hookEntity;
 		this.state = state;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	 *
 	 * @return Fish the entity representing the fishing hook/bobber.
 	 */
-	public Fish getHook() {
+	public FishHook getHook() {
 		return hookEntity;
 	}
 
@@ -101,17 +103,13 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		return handlers;
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
 	/**
 	 * An enum to specify the state of the fishing
 	 */
 	public enum State {
 
 		/**
-		 * When a player is fishing, ie casting the line out.
+		 * When a player is fishing, i.e., casting the line out.
 		 */
 		FISHING,
 		/**
@@ -127,8 +125,8 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		 */
 		IN_GROUND,
 		/**
-		 * When a player fails to catch anything while fishing usually due to
-		 * poor aiming or timing
+		 * When a player fails to catch anything while fishing,
+		 * usually due to poor aiming or timing
 		 */
 		FAILED_ATTEMPT,
 	}

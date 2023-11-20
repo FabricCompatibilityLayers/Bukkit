@@ -519,7 +519,8 @@ BUKKIT-1, BUKKIT-2" without closing punctuation.
 >
 > ##### Relevant PR(s):
 > This should be links to accompanying PRs, or alternate PRs that attempted to perform the task. Each reference should
-> have a reason attached as to why it is being referenced (for example: "Similar to PR ### but won't empty your Bukkits").
+> have a reason attached as to why it is being referenced (for example: "Similar to PR ### but won't empty your
+> Bukkits").
 > Accompanying PRs need no explanation, but still need to be linked.
 >
 > B-#### - https://github.com/Bukkit/Bukkit/pull/#### - Reason  

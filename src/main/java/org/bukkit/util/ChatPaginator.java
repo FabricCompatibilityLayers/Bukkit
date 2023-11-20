@@ -2,6 +2,7 @@ package org.bukkit.util;
 
 import org.bukkit.ChatColor;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class ChatPaginator {
 		char[] rawChars = (rawString + ' ').toCharArray(); // add a trailing space to trigger pagination
 		StringBuilder word = new StringBuilder();
 		StringBuilder line = new StringBuilder();
-		List<String> lines = new LinkedList<String>();
+		List<String> lines = new LinkedList<>();
 		int lineColorChars = 0;
 
 		for (int i = 0; i < rawChars.length; i++) {
@@ -92,9 +93,7 @@ public class ChatPaginator {
 
 			if (c == ' ' || c == '\n') {
 				if (line.length() == 0 && word.length() > lineLength) { // special case: extremely long word begins a line
-					for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
-						lines.add(partialWord);
-					}
+					Collections.addAll(lines, word.toString().split("(?<=\\G.{" + lineLength + "})"));
 				} else if (line.length() + word.length() - lineColorChars == lineLength) { // Line exactly the correct length...newline
 					line.append(word);
 					lines.add(line.toString());
@@ -146,9 +145,9 @@ public class ChatPaginator {
 
 	public static class ChatPage {
 
-		private String[] lines;
-		private int pageNumber;
-		private int totalPages;
+		private final String[] lines;
+		private final int pageNumber;
+		private final int totalPages;
 
 		public ChatPage(String[] lines, int pageNumber, int totalPages) {
 			this.lines = lines;

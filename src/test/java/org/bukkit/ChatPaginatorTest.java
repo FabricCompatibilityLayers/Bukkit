@@ -4,7 +4,6 @@ import org.bukkit.util.ChatPaginator;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -18,7 +17,7 @@ public class ChatPaginatorTest {
 
 		assertThat(lines.length, is(2));
 		assertThat(lines[0], is(ChatColor.RED + "123456789 123456789"));
-		assertThat(lines[1], is(ChatColor.RED.toString() + "123456789"));
+		assertThat(lines[1], is(ChatColor.RED + "123456789"));
 	}
 
 	@Test
@@ -27,8 +26,8 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 22);
 
 		assertThat(lines.length, is(2));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "123456789 123456789"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "123456789 123456789"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456789"));
 	}
 
 	@Test
@@ -48,8 +47,8 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 19);
 
 		assertThat(lines.length, is(2));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "123456789 123456789"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456789 12345"));
+		assertThat(lines[0], is(ChatColor.WHITE + "123456789 123456789"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456789 12345"));
 	}
 
 	@Test
@@ -58,8 +57,8 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 19);
 
 		assertThat(lines.length, is(2));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "123456789"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456789 123456789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "123456789"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456789 123456789"));
 	}
 
 	@Test
@@ -68,8 +67,8 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 19);
 
 		assertThat(lines.length, is(2));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "12345678   23456789"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "12345678   23456789"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456789"));
 	}
 
 	@Test
@@ -78,8 +77,8 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 19);
 
 		assertThat(lines.length, is(2));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "12345678   23456789"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "12345678   23456789"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456789"));
 	}
 
 	@Test
@@ -88,12 +87,12 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 6);
 
 		assertThat(lines.length, is(6));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "123456"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "789"));
-		assertThat(lines[2], is(ChatColor.WHITE.toString() + "123456"));
-		assertThat(lines[3], is(ChatColor.WHITE.toString() + "789"));
-		assertThat(lines[4], is(ChatColor.WHITE.toString() + "123456"));
-		assertThat(lines[5], is(ChatColor.WHITE.toString() + "789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "123456"));
+		assertThat(lines[1], is(ChatColor.WHITE + "789"));
+		assertThat(lines[2], is(ChatColor.WHITE + "123456"));
+		assertThat(lines[3], is(ChatColor.WHITE + "789"));
+		assertThat(lines[4], is(ChatColor.WHITE + "123456"));
+		assertThat(lines[5], is(ChatColor.WHITE + "789"));
 	}
 
 	@Test
@@ -102,13 +101,13 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 6);
 
 		assertThat(lines.length, is(7));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "1234"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456"));
-		assertThat(lines[2], is(ChatColor.WHITE.toString() + "789"));
-		assertThat(lines[3], is(ChatColor.WHITE.toString() + "123456"));
-		assertThat(lines[4], is(ChatColor.WHITE.toString() + "789"));
-		assertThat(lines[5], is(ChatColor.WHITE.toString() + "123456"));
-		assertThat(lines[6], is(ChatColor.WHITE.toString() + "789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "1234"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456"));
+		assertThat(lines[2], is(ChatColor.WHITE + "789"));
+		assertThat(lines[3], is(ChatColor.WHITE + "123456"));
+		assertThat(lines[4], is(ChatColor.WHITE + "789"));
+		assertThat(lines[5], is(ChatColor.WHITE + "123456"));
+		assertThat(lines[6], is(ChatColor.WHITE + "789"));
 	}
 
 	@Test
@@ -117,8 +116,8 @@ public class ChatPaginatorTest {
 		String[] lines = ChatPaginator.wordWrap(rawString, 19);
 
 		assertThat(lines.length, is(2));
-		assertThat(lines[0], is(ChatColor.WHITE.toString() + "123456789"));
-		assertThat(lines[1], is(ChatColor.WHITE.toString() + "123456789"));
+		assertThat(lines[0], is(ChatColor.WHITE + "123456789"));
+		assertThat(lines[1], is(ChatColor.WHITE + "123456789"));
 	}
 
 	@Test
@@ -138,8 +137,8 @@ public class ChatPaginatorTest {
 		assertThat(page.getPageNumber(), is(1));
 		assertThat(page.getTotalPages(), is(4));
 		assertThat(page.getLines().length, is(2));
-		assertThat(page.getLines()[0], is(ChatColor.WHITE.toString() + "1234"));
-		assertThat(page.getLines()[1], is(ChatColor.WHITE.toString() + "123456"));
+		assertThat(page.getLines()[0], is(ChatColor.WHITE + "1234"));
+		assertThat(page.getLines()[1], is(ChatColor.WHITE + "123456"));
 	}
 
 	@Test
@@ -150,8 +149,8 @@ public class ChatPaginatorTest {
 		assertThat(page.getPageNumber(), is(2));
 		assertThat(page.getTotalPages(), is(4));
 		assertThat(page.getLines().length, is(2));
-		assertThat(page.getLines()[0], is(ChatColor.WHITE.toString() + "789"));
-		assertThat(page.getLines()[1], is(ChatColor.WHITE.toString() + "123456"));
+		assertThat(page.getLines()[0], is(ChatColor.WHITE + "789"));
+		assertThat(page.getLines()[1], is(ChatColor.WHITE + "123456"));
 	}
 
 	@Test
@@ -162,6 +161,6 @@ public class ChatPaginatorTest {
 		assertThat(page.getPageNumber(), is(4));
 		assertThat(page.getTotalPages(), is(4));
 		assertThat(page.getLines().length, is(1));
-		assertThat(page.getLines()[0], is(ChatColor.WHITE.toString() + "789"));
+		assertThat(page.getLines()[0], is(ChatColor.WHITE + "789"));
 	}
 }

@@ -1,10 +1,10 @@
 package org.bukkit.inventory.meta;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * This type represents the storage mechanism for auxiliary item data.
@@ -129,6 +129,5 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
 	 */
 	boolean hasConflictingEnchant(Enchantment ench);
 
-	@SuppressWarnings("javadoc")
 	ItemMeta clone();
 }

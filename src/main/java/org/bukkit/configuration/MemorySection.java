@@ -1,25 +1,20 @@
 package org.bukkit.configuration;
 
-import static org.bukkit.util.NumberConversions.*;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Color;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import java.util.*;
+
+import static org.bukkit.util.NumberConversions.*;
+
 /**
  * A type of {@link ConfigurationSection} that is stored in memory.
  */
 public class MemorySection implements ConfigurationSection {
-	protected final Map<String, Object> map = new LinkedHashMap<String, Object>();
+	protected final Map<String, Object> map = new LinkedHashMap<>();
 	private final Configuration root;
 	private final ConfigurationSection parent;
 	private final String path;
@@ -70,7 +65,7 @@ public class MemorySection implements ConfigurationSection {
 	}
 
 	public Set<String> getKeys(boolean deep) {
-		Set<String> result = new LinkedHashSet<String>();
+		Set<String> result = new LinkedHashSet<>();
 
 		Configuration root = getRoot();
 		if (root != null && root.options().copyDefaults()) {
@@ -87,7 +82,7 @@ public class MemorySection implements ConfigurationSection {
 	}
 
 	public Map<String, Object> getValues(boolean deep) {
-		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		Map<String, Object> result = new LinkedHashMap<>();
 
 		Configuration root = getRoot();
 		if (root != null && root.options().copyDefaults()) {
@@ -372,10 +367,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<String>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if ((object instanceof String) || (isPrimitiveWrapper(object))) {
@@ -390,10 +385,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Integer>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Integer) {
@@ -417,10 +412,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Boolean>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Boolean> result = new ArrayList<Boolean>();
+		List<Boolean> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Boolean) {
@@ -441,10 +436,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Double>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Double> result = new ArrayList<Double>();
+		List<Double> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Double) {
@@ -468,10 +463,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Float>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Float> result = new ArrayList<Float>();
+		List<Float> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Float) {
@@ -495,10 +490,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Long>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Long> result = new ArrayList<Long>();
+		List<Long> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Long) {
@@ -522,10 +517,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Byte>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Byte> result = new ArrayList<Byte>();
+		List<Byte> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Byte) {
@@ -549,10 +544,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Character>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Character> result = new ArrayList<Character>();
+		List<Character> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Character) {
@@ -575,10 +570,10 @@ public class MemorySection implements ConfigurationSection {
 		List<?> list = getList(path);
 
 		if (list == null) {
-			return new ArrayList<Short>(0);
+			return new ArrayList<>(0);
 		}
 
-		List<Short> result = new ArrayList<Short>();
+		List<Short> result = new ArrayList<>();
 
 		for (Object object : list) {
 			if (object instanceof Short) {
@@ -600,7 +595,7 @@ public class MemorySection implements ConfigurationSection {
 
 	public List<Map<?, ?>> getMapList(String path) {
 		List<?> list = getList(path);
-		List<Map<?, ?>> result = new ArrayList<Map<?, ?>>();
+		List<Map<?, ?>> result = new ArrayList<>();
 
 		if (list == null) {
 			return result;
@@ -811,13 +806,11 @@ public class MemorySection implements ConfigurationSection {
 	@Override
 	public String toString() {
 		Configuration root = getRoot();
-		return new StringBuilder()
-				.append(getClass().getSimpleName())
-				.append("[path='")
-				.append(getCurrentPath())
-				.append("', root='")
-				.append(root == null ? null : root.getClass().getSimpleName())
-				.append("']")
-				.toString();
+		return getClass().getSimpleName() +
+				"[path='" +
+				getCurrentPath() +
+				"', root='" +
+				(root == null ? null : root.getClass().getSimpleName()) +
+				"']";
 	}
 }

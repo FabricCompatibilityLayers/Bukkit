@@ -1,11 +1,10 @@
 package org.bukkit;
 
-import java.util.Map;
-
 import com.google.common.collect.Maps;
-
 import org.bukkit.block.BlockFace;
 import org.bukkit.potion.Potion;
+
+import java.util.Map;
 
 /**
  * A list of effects that the server is able to send to players.

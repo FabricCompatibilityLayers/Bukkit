@@ -1,6 +1,6 @@
 package org.bukkit.map;
 
-import java.awt.Image;
+import java.awt.*;
 
 /**
  * Represents a canvas for drawing to a map. Each canvas is associated with a
@@ -14,14 +14,14 @@ public interface MapCanvas {
 	 *
 	 * @return The MapView this canvas is attached to.
 	 */
-	public MapView getMapView();
+	MapView getMapView();
 
 	/**
 	 * Get the cursor collection associated with this canvas.
 	 *
 	 * @return The MapCursorCollection associated with this canvas.
 	 */
-	public MapCursorCollection getCursors();
+	MapCursorCollection getCursors();
 
 	/**
 	 * Set the cursor collection associated with this canvas. This does not
@@ -30,7 +30,7 @@ public interface MapCanvas {
 	 *
 	 * @param cursors The MapCursorCollection to associate with this canvas.
 	 */
-	public void setCursors(MapCursorCollection cursors);
+	void setCursors(MapCursorCollection cursors);
 
 	/**
 	 * Draw a pixel to the canvas.
@@ -39,7 +39,7 @@ public interface MapCanvas {
 	 * @param y     The y coordinate, from 0 to 127.
 	 * @param color The color. See {@link MapPalette}.
 	 */
-	public void setPixel(int x, int y, byte color);
+	void setPixel(int x, int y, byte color);
 
 	/**
 	 * Get a pixel from the canvas.
@@ -49,7 +49,7 @@ public interface MapCanvas {
 	 *
 	 * @return The color. See {@link MapPalette}.
 	 */
-	public byte getPixel(int x, int y);
+	byte getPixel(int x, int y);
 
 	/**
 	 * Get a pixel from the layers below this canvas.
@@ -59,7 +59,7 @@ public interface MapCanvas {
 	 *
 	 * @return The color. See {@link MapPalette}.
 	 */
-	public byte getBasePixel(int x, int y);
+	byte getBasePixel(int x, int y);
 
 	/**
 	 * Draw an image to the map. The image will be clipped if necessary.
@@ -68,7 +68,7 @@ public interface MapCanvas {
 	 * @param y     The y coordinate of the image.
 	 * @param image The Image to draw.
 	 */
-	public void drawImage(int x, int y, Image image);
+	void drawImage(int x, int y, Image image);
 
 	/**
 	 * Render text to the map using fancy formatting. Newline (\n) characters
@@ -81,6 +81,6 @@ public interface MapCanvas {
 	 * @param font The font to use.
 	 * @param text The formatted text to render.
 	 */
-	public void drawText(int x, int y, MapFont font, String text);
+	void drawText(int x, int y, MapFont font, String text);
 
 }

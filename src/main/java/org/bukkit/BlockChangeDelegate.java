@@ -24,7 +24,7 @@ public interface BlockChangeDelegate {
 	 * @deprecated Magic value
 	 */
 	@Deprecated
-	public boolean setRawTypeId(int x, int y, int z, int typeId);
+	boolean setRawTypeId(int x, int y, int z, int typeId);
 
 	/**
 	 * Set a block type and data at the specified coordinates without doing
@@ -44,7 +44,7 @@ public interface BlockChangeDelegate {
 	 * @deprecated Magic value
 	 */
 	@Deprecated
-	public boolean setRawTypeIdAndData(int x, int y, int z, int typeId, int data);
+	boolean setRawTypeIdAndData(int x, int y, int z, int typeId, int data);
 
 	/**
 	 * Set a block type at the specified coordinates.
@@ -61,7 +61,7 @@ public interface BlockChangeDelegate {
 	 * @deprecated Magic value
 	 */
 	@Deprecated
-	public boolean setTypeId(int x, int y, int z, int typeId);
+	boolean setTypeId(int x, int y, int z, int typeId);
 
 	/**
 	 * Set a block type and data at the specified coordinates.
@@ -79,7 +79,7 @@ public interface BlockChangeDelegate {
 	 * @deprecated Magic value
 	 */
 	@Deprecated
-	public boolean setTypeIdAndData(int x, int y, int z, int typeId, int data);
+	boolean setTypeIdAndData(int x, int y, int z, int typeId, int data);
 
 	/**
 	 * Get the block type at the location.
@@ -93,14 +93,14 @@ public interface BlockChangeDelegate {
 	 * @deprecated Magic value
 	 */
 	@Deprecated
-	public int getTypeId(int x, int y, int z);
+	int getTypeId(int x, int y, int z);
 
 	/**
 	 * Gets the height of the world.
 	 *
 	 * @return Height of the world
 	 */
-	public int getHeight();
+	int getHeight();
 
 	/**
 	 * Checks if the specified block is empty (air) or not.
@@ -111,5 +111,5 @@ public interface BlockChangeDelegate {
 	 *
 	 * @return True if the block is considered empty.
 	 */
-	public boolean isEmpty(int x, int y, int z);
+	boolean isEmpty(int x, int y, int z);
 }

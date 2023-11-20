@@ -1,16 +1,15 @@
 package org.bukkit.command.defaults;
 
 import com.google.common.collect.ImmutableList;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EffectCommand extends VanillaCommand {
 	private static final List<String> effects;
@@ -23,7 +22,7 @@ public class EffectCommand extends VanillaCommand {
 	}
 
 	static {
-		ImmutableList.Builder<String> builder = ImmutableList.<String>builder();
+		ImmutableList.Builder<String> builder = ImmutableList.builder();
 
 		for (PotionEffectType type : PotionEffectType.values()) {
 			if (type != null) {
@@ -113,7 +112,7 @@ public class EffectCommand extends VanillaCommand {
 		if (args.length == 1) {
 			return super.tabComplete(sender, commandLabel, args);
 		} else if (args.length == 2) {
-			return StringUtil.copyPartialMatches(args[1], effects, new ArrayList<String>(effects.size()));
+			return StringUtil.copyPartialMatches(args[1], effects, new ArrayList<>(effects.size()));
 		}
 
 		return ImmutableList.of();

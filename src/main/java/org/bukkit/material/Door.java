@@ -10,6 +10,7 @@ import org.bukkit.block.BlockFace;
  */
 @Deprecated
 public class Door extends MaterialData implements Directional, Openable {
+	@Deprecated
 	public Door() {
 		super(Material.WOODEN_DOOR);
 	}

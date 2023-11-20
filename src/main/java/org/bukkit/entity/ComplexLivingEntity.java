@@ -10,7 +10,7 @@ public interface ComplexLivingEntity extends LivingEntity {
 	/**
 	 * Gets a list of parts that belong to this complex entity
 	 *
-	 * @return List of parts
+	 * @return set of parts
 	 */
-	public Set<ComplexEntityPart> getParts();
+	Set<ComplexEntityPart> getParts();
 }

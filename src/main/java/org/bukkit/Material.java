@@ -1,62 +1,14 @@
 package org.bukkit;
 
-import java.lang.reflect.Constructor;
-import java.util.Map;
-
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.Validate;
 import org.bukkit.map.MapView;
-import org.bukkit.material.Bed;
-import org.bukkit.material.Button;
-import org.bukkit.material.Cake;
-import org.bukkit.material.Cauldron;
-import org.bukkit.material.Chest;
-import org.bukkit.material.Coal;
-import org.bukkit.material.CocoaPlant;
-import org.bukkit.material.Command;
-import org.bukkit.material.Crops;
-import org.bukkit.material.DetectorRail;
-import org.bukkit.material.Diode;
-import org.bukkit.material.Dispenser;
-import org.bukkit.material.Door;
-import org.bukkit.material.Dye;
-import org.bukkit.material.EnderChest;
-import org.bukkit.material.FlowerPot;
-import org.bukkit.material.Furnace;
-import org.bukkit.material.Gate;
-import org.bukkit.material.Ladder;
-import org.bukkit.material.Lever;
-import org.bukkit.material.LongGrass;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.MonsterEggs;
-import org.bukkit.material.Mushroom;
-import org.bukkit.material.NetherWarts;
-import org.bukkit.material.PistonBaseMaterial;
-import org.bukkit.material.PistonExtensionMaterial;
-import org.bukkit.material.PoweredRail;
-import org.bukkit.material.PressurePlate;
-import org.bukkit.material.Pumpkin;
-import org.bukkit.material.Rails;
-import org.bukkit.material.RedstoneTorch;
-import org.bukkit.material.RedstoneWire;
-import org.bukkit.material.Sandstone;
-import org.bukkit.material.Sign;
-import org.bukkit.material.Skull;
-import org.bukkit.material.SmoothBrick;
-import org.bukkit.material.SpawnEgg;
-import org.bukkit.material.Stairs;
-import org.bukkit.material.Step;
-import org.bukkit.material.Torch;
-import org.bukkit.material.TrapDoor;
-import org.bukkit.material.Tree;
-import org.bukkit.material.Tripwire;
-import org.bukkit.material.TripwireHook;
-import org.bukkit.material.Vine;
-import org.bukkit.material.WoodenStep;
-import org.bukkit.material.Wool;
+import org.bukkit.material.*;
 import org.bukkit.potion.Potion;
 import org.bukkit.util.Java15Compat;
 
-import com.google.common.collect.Maps;
+import java.lang.reflect.Constructor;
+import java.util.Map;
 
 /**
  * An enum of all material IDs accepted by the official server and client
@@ -126,14 +78,14 @@ public enum Material {
 	FURNACE(61, Furnace.class),
 	BURNING_FURNACE(62, Furnace.class),
 	SIGN_POST(63, 64, Sign.class),
-	WOODEN_DOOR(64, Door.class),
+	WOODEN_DOOR(64),
 	LADDER(65, Ladder.class),
 	RAILS(66, Rails.class),
 	COBBLESTONE_STAIRS(67, Stairs.class),
 	WALL_SIGN(68, 64, Sign.class),
 	LEVER(69, Lever.class),
 	STONE_PLATE(70, PressurePlate.class),
-	IRON_DOOR_BLOCK(71, Door.class),
+	IRON_DOOR_BLOCK(71),
 	WOOD_PLATE(72, PressurePlate.class),
 	REDSTONE_ORE(73),
 	GLOWING_REDSTONE_ORE(74),
@@ -415,45 +367,117 @@ public enum Material {
 	RECORD_12(2267, 1),
 	;
 
+	private final static Map<String, Material> BY_NAME = Maps.newHashMap();
+	private static Material[] byId = new Material[383];
+
+	static {
+		for (Material material : values()) {
+			if (byId.length <= material.id) {
+				byId = Java15Compat.Arrays_copyOfRange(byId, 0, material.id + 2);
+			}
+			byId[material.id] = material;
+			BY_NAME.put(material.name(), material);
+		}
+	}
+
 	private final int id;
 	private final Constructor<? extends MaterialData> ctor;
-	private static Material[] byId = new Material[383];
-	private final static Map<String, Material> BY_NAME = Maps.newHashMap();
 	private final int maxStack;
 	private final short durability;
+	private boolean solid = false;
 
-	private Material(final int id) {
+	Material(final int id) {
 		this(id, 64);
 	}
 
-	private Material(final int id, final int stack) {
+	Material(final int id, final int stack) {
 		this(id, stack, MaterialData.class);
 	}
 
-	private Material(final int id, final int stack, final int durability) {
+	Material(final int id, final int stack, final int durability) {
 		this(id, stack, durability, MaterialData.class);
 	}
 
-	private Material(final int id, final Class<? extends MaterialData> data) {
+	Material(final int id, final Class<? extends MaterialData> data) {
 		this(id, 64, data);
 	}
 
-	private Material(final int id, final int stack, final Class<? extends MaterialData> data) {
+	Material(final int id, final int stack, final Class<? extends MaterialData> data) {
 		this(id, stack, 0, data);
 	}
 
-	private Material(final int id, final int stack, final int durability, final Class<? extends MaterialData> data) {
+	Material(final int id, final int stack, final int durability, final Class<? extends MaterialData> data) {
 		this.id = id;
 		this.durability = (short) durability;
 		this.maxStack = stack;
 		// try to cache the constructor for this material
 		try {
 			this.ctor = data.getConstructor(int.class, byte.class);
-		} catch (NoSuchMethodException ex) {
-			throw new AssertionError(ex);
-		} catch (SecurityException ex) {
+		} catch (NoSuchMethodException | SecurityException ex) {
 			throw new AssertionError(ex);
 		}
+	}
+
+	/**
+	 * Attempts to get the Material with the given ID
+	 *
+	 * @param id ID of the material to get
+	 *
+	 * @return Material if found, or null
+	 *
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public static Material getMaterial(final int id) {
+		if (byId.length > id && id >= 0) return byId[id];
+		else return null;
+	}
+
+	/**
+	 * Attempts to get the Material with the given name.
+	 * <p>
+	 * This is a normal lookup, names must be the precise name they are given
+	 * in the enum.
+	 *
+	 * @param name Name of the material to get
+	 *
+	 * @return Material if found, or null
+	 */
+	public static Material getMaterial(final String name) {
+		return BY_NAME.get(name);
+	}
+
+	/**
+	 * Attempts to match the Material with the given name.
+	 * <p>
+	 * This is a match lookup; names will be converted to uppercase, then
+	 * stripped of special characters in an attempt to format it like the
+	 * enum.
+	 * <p>
+	 * Using this for match by ID is deprecated.
+	 *
+	 * @param name Name of the material to get
+	 *
+	 * @return Material if found, or null
+	 */
+	public static Material matchMaterial(final String name) {
+		Validate.notNull(name, "Name cannot be null");
+
+		Material result = null;
+
+		try {
+			result = getMaterial(Integer.parseInt(name));
+		} catch (NumberFormatException ignored) {
+		}
+
+		if (result == null) {
+			String filtered = name.toUpperCase();
+
+			filtered = filtered.replaceAll("\\s+", "_").replaceAll("\\W", "");
+			result = BY_NAME.get(filtered);
+		}
+
+		return result;
 	}
 
 	/**
@@ -564,83 +588,6 @@ public enum Material {
 				return true;
 			default:
 				return false;
-		}
-	}
-
-	/**
-	 * Attempts to get the Material with the given ID
-	 *
-	 * @param id ID of the material to get
-	 *
-	 * @return Material if found, or null
-	 *
-	 * @deprecated Magic value
-	 */
-	@Deprecated
-	public static Material getMaterial(final int id) {
-		if (byId.length > id && id >= 0) {
-			return byId[id];
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Attempts to get the Material with the given name.
-	 * <p>
-	 * This is a normal lookup, names must be the precise name they are given
-	 * in the enum.
-	 *
-	 * @param name Name of the material to get
-	 *
-	 * @return Material if found, or null
-	 */
-	public static Material getMaterial(final String name) {
-		return BY_NAME.get(name);
-	}
-
-	/**
-	 * Attempts to match the Material with the given name.
-	 * <p>
-	 * This is a match lookup; names will be converted to uppercase, then
-	 * stripped of special characters in an attempt to format it like the
-	 * enum.
-	 * <p>
-	 * Using this for match by ID is deprecated.
-	 *
-	 * @param name Name of the material to get
-	 *
-	 * @return Material if found, or null
-	 */
-	public static Material matchMaterial(final String name) {
-		Validate.notNull(name, "Name cannot be null");
-
-		Material result = null;
-
-		try {
-			result = getMaterial(Integer.parseInt(name));
-		} catch (NumberFormatException ex) {
-		}
-
-		if (result == null) {
-			String filtered = name.toUpperCase();
-
-			filtered = filtered.replaceAll("\\s+", "_").replaceAll("\\W", "");
-			result = BY_NAME.get(filtered);
-		}
-
-		return result;
-	}
-
-	static {
-		for (Material material : values()) {
-			if (byId.length > material.id) {
-				byId[material.id] = material;
-			} else {
-				byId = Java15Compat.Arrays_copyOfRange(byId, 0, material.id + 2);
-				byId[material.id] = material;
-			}
-			BY_NAME.put(material.name(), material);
 		}
 	}
 
@@ -789,6 +736,10 @@ public enum Material {
 			default:
 				return false;
 		}
+	}
+
+	private void solid(boolean solid) {
+		this.solid = solid;
 	}
 
 	/**

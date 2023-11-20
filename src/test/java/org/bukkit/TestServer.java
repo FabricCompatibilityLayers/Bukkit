@@ -1,19 +1,18 @@
 package org.bukkit;
 
+import com.google.common.collect.ImmutableMap;
+import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.SimplePluginManager;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.SimplePluginManager;
-
-import com.google.common.collect.ImmutableMap;
-
 public class TestServer implements InvocationHandler {
-	private static interface MethodHandler {
+	private interface MethodHandler {
 		Object handle(TestServer server, Object[] args);
 	}
 
@@ -83,13 +82,11 @@ public class TestServer implements InvocationHandler {
 		}
 	}
 
-	private Thread creatingThread = Thread.currentThread();
+	private final Thread creatingThread = Thread.currentThread();
 	private PluginManager pluginManager;
 
 	private TestServer() {
 	}
-
-	;
 
 	public static Server getInstance() {
 		return Bukkit.getServer();

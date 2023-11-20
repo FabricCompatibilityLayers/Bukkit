@@ -1,21 +1,21 @@
 package org.bukkit.plugin.messaging;
 
+import org.bukkit.entity.Player;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 
-import org.bukkit.entity.Player;
-
 
 public class TestPlayer implements InvocationHandler {
-	private static interface MethodHandler {
+	private interface MethodHandler {
 		Object handle(TestPlayer server, Object[] args);
 	}
 
 	private static final Constructor<? extends Player> constructor;
-	private static final HashMap<Method, MethodHandler> methods = new HashMap<Method, MethodHandler>();
+	private static final HashMap<Method, MethodHandler> methods = new HashMap<>();
 
 	static {
 		try {
@@ -34,8 +34,6 @@ public class TestPlayer implements InvocationHandler {
 
 	private TestPlayer() {
 	}
-
-	;
 
 	public static Player getInstance() {
 		try {

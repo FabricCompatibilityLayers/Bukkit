@@ -1,10 +1,10 @@
 package org.bukkit;
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class ChatColorTest {
 
@@ -17,7 +17,7 @@ public class ChatColorTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void getByStringWithNull() {
-		ChatColor.getByChar((String) null);
+		ChatColor.getByChar(null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

@@ -1,11 +1,10 @@
 package org.bukkit;
 
-import java.util.Map;
-import java.util.regex.Pattern;
-
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.Validate;
 
-import com.google.common.collect.Maps;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * All supported color values for chat
@@ -105,7 +104,7 @@ public enum ChatColor {
 	 * you need to dynamically convert colour codes from your custom format.
 	 */
 	public static final char COLOR_CHAR = '\u00A7';
-	private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf(COLOR_CHAR) + "[0-9A-FK-OR]");
+	private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + COLOR_CHAR + "[0-9A-FK-OR]");
 
 	private final int intCode;
 	private final char code;
@@ -114,11 +113,11 @@ public enum ChatColor {
 	private final static Map<Integer, ChatColor> BY_ID = Maps.newHashMap();
 	private final static Map<Character, ChatColor> BY_CHAR = Maps.newHashMap();
 
-	private ChatColor(char code, int intCode) {
+	ChatColor(char code, int intCode) {
 		this(code, intCode, false);
 	}
 
-	private ChatColor(char code, int intCode, boolean isFormat) {
+	ChatColor(char code, int intCode, boolean isFormat) {
 		this.code = code;
 		this.intCode = intCode;
 		this.isFormat = isFormat;
@@ -236,7 +235,7 @@ public enum ChatColor {
 				ChatColor color = getByChar(c);
 
 				if (color != null) {
-					result = color.toString() + result;
+					result = color + result;
 
 					// Once we find a color or reset we can stop searching
 					if (color.isColor() || color.equals(RESET)) {

@@ -1,15 +1,15 @@
 package org.bukkit.event.inventory;
 
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
+import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryType.SlotType;
-import org.bukkit.Location;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 /**
  * This event is called when a player clicks a slot in an inventory.
@@ -47,9 +47,9 @@ public class InventoryClickEvent extends InventoryInteractEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private final ClickType click;
 	private final InventoryAction action;
-	private SlotType slot_type;
-	private int whichSlot;
-	private int rawSlot;
+	private final SlotType slot_type;
+	private final int whichSlot;
+	private final int rawSlot;
 	private ItemStack current = null;
 	private int hotbarKey = -1;
 

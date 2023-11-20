@@ -1,14 +1,13 @@
 package org.bukkit;
 
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a single firework effect.
@@ -40,7 +39,6 @@ public final class FireworkEffect implements ConfigurationSerializable {
 		 * A creeper-face effect.
 		 */
 		CREEPER,
-		;
 	}
 
 	/**
@@ -291,7 +289,7 @@ public final class FireworkEffect implements ConfigurationSerializable {
 					flicker,
 					trail,
 					colors.build(),
-					fadeColors == null ? ImmutableList.<Color>of() : fadeColors.build(),
+					fadeColors == null ? ImmutableList.of() : fadeColors.build(),
 					type
 			);
 		}
@@ -385,7 +383,7 @@ public final class FireworkEffect implements ConfigurationSerializable {
 	}
 
 	public Map<String, Object> serialize() {
-		return ImmutableMap.<String, Object>of(
+		return ImmutableMap.of(
 				FLICKER, flicker,
 				TRAIL, trail,
 				COLORS, colors,

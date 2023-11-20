@@ -10,21 +10,21 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a creature is spawned into a world.
  * <p>
- * If a Creature Spawn event is cancelled, the creature will not spawn.
+ * If a Creature Spawn event is canceled, the creature will not spawn.
  */
 public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean canceled;
 	private final SpawnReason spawnReason;
 
-	public CreatureSpawnEvent(final LivingEntity spawnee, final SpawnReason spawnReason) {
-		super(spawnee);
+	public CreatureSpawnEvent(final LivingEntity spawned, final SpawnReason spawnReason) {
+		super(spawned);
 		this.spawnReason = spawnReason;
 	}
 
 	@Deprecated
-	public CreatureSpawnEvent(Entity spawnee, CreatureType type, Location loc, SpawnReason reason) {
-		super(spawnee);
+	public CreatureSpawnEvent(Entity spawned, CreatureType type, Location loc, SpawnReason reason) {
+		super(spawned);
 		spawnReason = reason;
 	}
 
@@ -56,7 +56,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 	 * @return A CreatureType value detailing the type of creature being
 	 * spawned
 	 *
-	 * @deprecated In favour of {@link #getEntityType()}.
+	 * @deprecated In favor of {@link #getEntityType()}.
 	 */
 	@Deprecated
 	public CreatureType getCreatureType() {
@@ -168,7 +168,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 		 */
 		INFECTION,
 		/**
-		 * When a villager is cured from infection
+		 * When a villager is cured of infection
 		 */
 		CURED,
 		/**
@@ -185,7 +185,7 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 		 */
 		MOUNT,
 		/**
-		 * When a creature is spawned by plugins
+		 * When plugins spawn a creature
 		 */
 		CUSTOM,
 		/**

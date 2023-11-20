@@ -1,8 +1,8 @@
 package org.bukkit.permissions;
 
-import java.util.Set;
-
 import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
 
 /**
  * Represents an object that may be assigned permissions
@@ -17,7 +17,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return true if the permission is set, otherwise false
 	 */
-	public boolean isPermissionSet(String name);
+	boolean isPermissionSet(String name);
 
 	/**
 	 * Checks if this object contains an override for the specified {@link
@@ -27,7 +27,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return true if the permission is set, otherwise false
 	 */
-	public boolean isPermissionSet(Permission perm);
+	boolean isPermissionSet(Permission perm);
 
 	/**
 	 * Gets the value of the specified permission, if set.
@@ -39,7 +39,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return Value of the permission
 	 */
-	public boolean hasPermission(String name);
+	boolean hasPermission(String name);
 
 	/**
 	 * Gets the value of the specified permission, if set.
@@ -51,7 +51,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return Value of the permission
 	 */
-	public boolean hasPermission(Permission perm);
+	boolean hasPermission(Permission perm);
 
 	/**
 	 * Adds a new {@link PermissionAttachment} with a single permission by
@@ -64,7 +64,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return The PermissionAttachment that was just created
 	 */
-	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value);
+	PermissionAttachment addAttachment(Plugin plugin, String name, boolean value);
 
 	/**
 	 * Adds a new empty {@link PermissionAttachment} to this object
@@ -74,7 +74,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return The PermissionAttachment that was just created
 	 */
-	public PermissionAttachment addAttachment(Plugin plugin);
+	PermissionAttachment addAttachment(Plugin plugin);
 
 	/**
 	 * Temporarily adds a new {@link PermissionAttachment} with a single
@@ -89,7 +89,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return The PermissionAttachment that was just created
 	 */
-	public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks);
+	PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks);
 
 	/**
 	 * Temporarily adds a new empty {@link PermissionAttachment} to this
@@ -102,7 +102,7 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return The PermissionAttachment that was just created
 	 */
-	public PermissionAttachment addAttachment(Plugin plugin, int ticks);
+	PermissionAttachment addAttachment(Plugin plugin, int ticks);
 
 	/**
 	 * Removes the given {@link PermissionAttachment} from this object
@@ -112,7 +112,7 @@ public interface Permissible extends ServerOperator {
 	 * @throws IllegalArgumentException Thrown when the specified attachment
 	 *                                  isn't part of this object
 	 */
-	public void removeAttachment(PermissionAttachment attachment);
+	void removeAttachment(PermissionAttachment attachment);
 
 	/**
 	 * Recalculates the permissions for this object, if the attachments have
@@ -120,7 +120,7 @@ public interface Permissible extends ServerOperator {
 	 * <p>
 	 * This should very rarely need to be called from a plugin.
 	 */
-	public void recalculatePermissions();
+	void recalculatePermissions();
 
 	/**
 	 * Gets a set containing all of the permissions currently in effect by
@@ -128,5 +128,5 @@ public interface Permissible extends ServerOperator {
 	 *
 	 * @return Set of currently effective permissions
 	 */
-	public Set<PermissionAttachmentInfo> getEffectivePermissions();
+	Set<PermissionAttachmentInfo> getEffectivePermissions();
 }

@@ -1,9 +1,9 @@
 package org.bukkit.command.defaults;
 
-import java.util.List;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
 
 public abstract class VanillaCommand extends Command {
 	static final int MAX_COORD = 30000000;
@@ -34,7 +34,7 @@ public abstract class VanillaCommand extends Command {
 		int i = min;
 
 		try {
-			i = Integer.valueOf(value);
+			i = Integer.parseInt(value);
 		} catch (NumberFormatException ex) {
 			if (Throws) {
 				throw new NumberFormatException(String.format("%s is not a valid number", value));

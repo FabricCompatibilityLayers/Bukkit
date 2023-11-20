@@ -1,11 +1,11 @@
 package org.bukkit.material;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * Represents a huge mushroom block
@@ -185,6 +185,7 @@ public class Mushroom extends MaterialData {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public String toString() {
 		return Material.getMaterial(getItemTypeId()).toString() + (isStem() ? "{STEM}" : getPaintedFaces());
 	}

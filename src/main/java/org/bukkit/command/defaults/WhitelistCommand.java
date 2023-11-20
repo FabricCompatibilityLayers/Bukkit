@@ -1,8 +1,6 @@
 package org.bukkit.command.defaults;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,7 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WhitelistCommand extends VanillaCommand {
 	private static final List<String> WHITELIST_SUBCOMMANDS = ImmutableList.of("add", "remove", "on", "off", "list", "reload");
@@ -59,7 +58,7 @@ public class WhitelistCommand extends VanillaCommand {
 					result.append(player.getName());
 				}
 
-				sender.sendMessage("White-listed players: " + result.toString());
+				sender.sendMessage("White-listed players: " + result);
 				return true;
 			}
 		} else if (args.length == 2) {
@@ -100,10 +99,10 @@ public class WhitelistCommand extends VanillaCommand {
 		Validate.notNull(alias, "Alias cannot be null");
 
 		if (args.length == 1) {
-			return StringUtil.copyPartialMatches(args[0], WHITELIST_SUBCOMMANDS, new ArrayList<String>(WHITELIST_SUBCOMMANDS.size()));
+			return StringUtil.copyPartialMatches(args[0], WHITELIST_SUBCOMMANDS, new ArrayList<>(WHITELIST_SUBCOMMANDS.size()));
 		} else if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("add")) {
-				List<String> completions = new ArrayList<String>();
+				List<String> completions = new ArrayList<>();
 				for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
 					String name = player.getName();
 					if (StringUtil.startsWithIgnoreCase(name, args[1]) && !player.isWhitelisted()) {
@@ -112,7 +111,7 @@ public class WhitelistCommand extends VanillaCommand {
 				}
 				return completions;
 			} else if (args[0].equalsIgnoreCase("remove")) {
-				List<String> completions = new ArrayList<String>();
+				List<String> completions = new ArrayList<>();
 				for (OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
 					String name = player.getName();
 					if (StringUtil.startsWithIgnoreCase(name, args[1])) {

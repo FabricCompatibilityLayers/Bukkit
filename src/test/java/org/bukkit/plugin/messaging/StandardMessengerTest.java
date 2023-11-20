@@ -2,12 +2,12 @@ package org.bukkit.plugin.messaging;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.TestPlugin;
+import org.junit.Test;
 
 import java.util.Collection;
 
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

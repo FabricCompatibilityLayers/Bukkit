@@ -19,13 +19,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.TestPlugin;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  *
  */
 public class MetadataConversionTest {
-	private Plugin plugin = new TestPlugin("x");
+	private final Plugin plugin = new TestPlugin("x");
 	private FixedMetadataValue subject;
 
 	private void setSubject(Object value) {
@@ -42,7 +42,7 @@ public class MetadataConversionTest {
 		assertEquals(10, subject.asLong());
 		assertEquals(10, subject.asShort());
 		assertEquals(10, subject.asByte());
-		assertEquals(true, subject.asBoolean());
+		assertTrue(subject.asBoolean());
 		assertEquals("10", subject.asString());
 	}
 
@@ -56,7 +56,7 @@ public class MetadataConversionTest {
 		assertEquals(10, subject.asLong());
 		assertEquals(10, subject.asShort());
 		assertEquals(10, subject.asByte());
-		assertEquals(true, subject.asBoolean());
+		assertTrue(subject.asBoolean());
 		assertEquals("10.5", subject.asString());
 	}
 
@@ -70,7 +70,7 @@ public class MetadataConversionTest {
 		assertEquals(10, subject.asLong());
 		assertEquals(10, subject.asShort());
 		assertEquals(10, subject.asByte());
-		assertEquals(false, subject.asBoolean());
+		assertFalse(subject.asBoolean());
 		assertEquals("10", subject.asString());
 	}
 
@@ -84,7 +84,7 @@ public class MetadataConversionTest {
 		assertEquals(0, subject.asLong());
 		assertEquals(0, subject.asShort());
 		assertEquals(0, subject.asByte());
-		assertEquals(true, subject.asBoolean());
+		assertTrue(subject.asBoolean());
 		assertEquals("true", subject.asString());
 	}
 
@@ -98,7 +98,7 @@ public class MetadataConversionTest {
 		assertEquals(0, subject.asLong());
 		assertEquals(0, subject.asShort());
 		assertEquals(0, subject.asByte());
-		assertEquals(false, subject.asBoolean());
+		assertFalse(subject.asBoolean());
 		assertEquals("", subject.asString());
 	}
 }

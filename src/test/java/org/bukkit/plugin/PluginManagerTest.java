@@ -1,18 +1,17 @@
 package org.bukkit.plugin;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
 import org.bukkit.TestServer;
 import org.bukkit.event.Event;
 import org.bukkit.event.TestEvent;
 import org.bukkit.permissions.Permission;
-
 import org.junit.After;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 public class PluginManagerTest {
-	private class MutableObject {
+	private static class MutableObject {
 		volatile Object value = null;
 	}
 

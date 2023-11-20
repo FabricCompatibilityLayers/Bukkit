@@ -2,9 +2,9 @@ package org.bukkit.scheduler;
 
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.List;
 
 public interface BukkitScheduler {
 
@@ -19,13 +19,13 @@ public interface BukkitScheduler {
 	 *
 	 * @return Task id number (-1 if scheduling failed)
 	 */
-	public int scheduleSyncDelayedTask(Plugin plugin, Runnable task, long delay);
+	int scheduleSyncDelayedTask(Plugin plugin, Runnable task, long delay);
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskLater(Plugin, long)}
 	 */
 	@Deprecated
-	public int scheduleSyncDelayedTask(Plugin plugin, BukkitRunnable task, long delay);
+	int scheduleSyncDelayedTask(Plugin plugin, BukkitRunnable task, long delay);
 
 	/**
 	 * Schedules a once off task to occur as soon as possible.
@@ -37,13 +37,13 @@ public interface BukkitScheduler {
 	 *
 	 * @return Task id number (-1 if scheduling failed)
 	 */
-	public int scheduleSyncDelayedTask(Plugin plugin, Runnable task);
+	int scheduleSyncDelayedTask(Plugin plugin, Runnable task);
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTask(Plugin)}
 	 */
 	@Deprecated
-	public int scheduleSyncDelayedTask(Plugin plugin, BukkitRunnable task);
+	int scheduleSyncDelayedTask(Plugin plugin, BukkitRunnable task);
 
 	/**
 	 * Schedules a repeating task.
@@ -57,13 +57,13 @@ public interface BukkitScheduler {
 	 *
 	 * @return Task id number (-1 if scheduling failed)
 	 */
-	public int scheduleSyncRepeatingTask(Plugin plugin, Runnable task, long delay, long period);
+	int scheduleSyncRepeatingTask(Plugin plugin, Runnable task, long delay, long period);
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskTimer(Plugin, long, long)}
 	 */
 	@Deprecated
-	public int scheduleSyncRepeatingTask(Plugin plugin, BukkitRunnable task, long delay, long period);
+	int scheduleSyncRepeatingTask(Plugin plugin, BukkitRunnable task, long delay, long period);
 
 	/**
 	 * <b>Asynchronous tasks should never access any API in Bukkit. Great care
@@ -82,7 +82,7 @@ public interface BukkitScheduler {
 	 * task, but rather, "an async" task
 	 */
 	@Deprecated
-	public int scheduleAsyncDelayedTask(Plugin plugin, Runnable task, long delay);
+	int scheduleAsyncDelayedTask(Plugin plugin, Runnable task, long delay);
 
 	/**
 	 * <b>Asynchronous tasks should never access any API in Bukkit. Great care
@@ -100,7 +100,7 @@ public interface BukkitScheduler {
 	 * task, but rather, "an async" task
 	 */
 	@Deprecated
-	public int scheduleAsyncDelayedTask(Plugin plugin, Runnable task);
+	int scheduleAsyncDelayedTask(Plugin plugin, Runnable task);
 
 	/**
 	 * <b>Asynchronous tasks should never access any API in Bukkit. Great care
@@ -120,7 +120,7 @@ public interface BukkitScheduler {
 	 * task, but rather, "an async" task
 	 */
 	@Deprecated
-	public int scheduleAsyncRepeatingTask(Plugin plugin, Runnable task, long delay, long period);
+	int scheduleAsyncRepeatingTask(Plugin plugin, Runnable task, long delay, long period);
 
 	/**
 	 * Calls a method on the main thread and returns a Future object. This
@@ -138,14 +138,14 @@ public interface BukkitScheduler {
 	 *
 	 * @return Future Future object related to the task
 	 */
-	public <T> Future<T> callSyncMethod(Plugin plugin, Callable<T> task);
+	<T> Future<T> callSyncMethod(Plugin plugin, Callable<T> task);
 
 	/**
 	 * Removes task from scheduler.
 	 *
 	 * @param taskId Id number of task to be removed
 	 */
-	public void cancelTask(int taskId);
+	void cancelTask(int taskId);
 
 	/**
 	 * Removes all tasks associated with a particular plugin from the
@@ -153,12 +153,12 @@ public interface BukkitScheduler {
 	 *
 	 * @param plugin Owner of tasks to be removed
 	 */
-	public void cancelTasks(Plugin plugin);
+	void cancelTasks(Plugin plugin);
 
 	/**
 	 * Removes all tasks from the scheduler.
 	 */
-	public void cancelAllTasks();
+	void cancelAllTasks();
 
 	/**
 	 * Check if the task currently running.
@@ -175,7 +175,7 @@ public interface BukkitScheduler {
 	 *
 	 * @return If the task is currently running.
 	 */
-	public boolean isCurrentlyRunning(int taskId);
+	boolean isCurrentlyRunning(int taskId);
 
 	/**
 	 * Check if the task queued to be run later.
@@ -189,7 +189,7 @@ public interface BukkitScheduler {
 	 *
 	 * @return If the task is queued to be run.
 	 */
-	public boolean isQueued(int taskId);
+	boolean isQueued(int taskId);
 
 	/**
 	 * Returns a list of all active workers.
@@ -199,7 +199,7 @@ public interface BukkitScheduler {
 	 *
 	 * @return Active workers
 	 */
-	public List<BukkitWorker> getActiveWorkers();
+	List<BukkitWorker> getActiveWorkers();
 
 	/**
 	 * Returns a list of all pending tasks. The ordering of the tasks is not
@@ -207,7 +207,7 @@ public interface BukkitScheduler {
 	 *
 	 * @return Active workers
 	 */
-	public List<BukkitTask> getPendingTasks();
+	List<BukkitTask> getPendingTasks();
 
 	/**
 	 * Returns a task that will run on the next server tick.
@@ -220,13 +220,13 @@ public interface BukkitScheduler {
 	 * @throws IllegalArgumentException if plugin is null
 	 * @throws IllegalArgumentException if task is null
 	 */
-	public BukkitTask runTask(Plugin plugin, Runnable task) throws IllegalArgumentException;
+	BukkitTask runTask(Plugin plugin, Runnable task) throws IllegalArgumentException;
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTask(Plugin)}
 	 */
 	@Deprecated
-	public BukkitTask runTask(Plugin plugin, BukkitRunnable task) throws IllegalArgumentException;
+	BukkitTask runTask(Plugin plugin, BukkitRunnable task) throws IllegalArgumentException;
 
 	/**
 	 * <b>Asynchronous tasks should never access any API in Bukkit. Great care
@@ -242,13 +242,13 @@ public interface BukkitScheduler {
 	 * @throws IllegalArgumentException if plugin is null
 	 * @throws IllegalArgumentException if task is null
 	 */
-	public BukkitTask runTaskAsynchronously(Plugin plugin, Runnable task) throws IllegalArgumentException;
+	BukkitTask runTaskAsynchronously(Plugin plugin, Runnable task) throws IllegalArgumentException;
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskAsynchronously(Plugin)}
 	 */
 	@Deprecated
-	public BukkitTask runTaskAsynchronously(Plugin plugin, BukkitRunnable task) throws IllegalArgumentException;
+	BukkitTask runTaskAsynchronously(Plugin plugin, BukkitRunnable task) throws IllegalArgumentException;
 
 	/**
 	 * Returns a task that will run after the specified number of server
@@ -263,13 +263,13 @@ public interface BukkitScheduler {
 	 * @throws IllegalArgumentException if plugin is null
 	 * @throws IllegalArgumentException if task is null
 	 */
-	public BukkitTask runTaskLater(Plugin plugin, Runnable task, long delay) throws IllegalArgumentException;
+	BukkitTask runTaskLater(Plugin plugin, Runnable task, long delay) throws IllegalArgumentException;
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskLater(Plugin, long)}
 	 */
 	@Deprecated
-	public BukkitTask runTaskLater(Plugin plugin, BukkitRunnable task, long delay) throws IllegalArgumentException;
+	BukkitTask runTaskLater(Plugin plugin, BukkitRunnable task, long delay) throws IllegalArgumentException;
 
 	/**
 	 * <b>Asynchronous tasks should never access any API in Bukkit. Great care
@@ -287,13 +287,13 @@ public interface BukkitScheduler {
 	 * @throws IllegalArgumentException if plugin is null
 	 * @throws IllegalArgumentException if task is null
 	 */
-	public BukkitTask runTaskLaterAsynchronously(Plugin plugin, Runnable task, long delay) throws IllegalArgumentException;
+	BukkitTask runTaskLaterAsynchronously(Plugin plugin, Runnable task, long delay) throws IllegalArgumentException;
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskLaterAsynchronously(Plugin, long)}
 	 */
 	@Deprecated
-	public BukkitTask runTaskLaterAsynchronously(Plugin plugin, BukkitRunnable task, long delay) throws IllegalArgumentException;
+	BukkitTask runTaskLaterAsynchronously(Plugin plugin, BukkitRunnable task, long delay) throws IllegalArgumentException;
 
 	/**
 	 * Returns a task that will repeatedly run until cancelled, starting after
@@ -309,13 +309,13 @@ public interface BukkitScheduler {
 	 * @throws IllegalArgumentException if plugin is null
 	 * @throws IllegalArgumentException if task is null
 	 */
-	public BukkitTask runTaskTimer(Plugin plugin, Runnable task, long delay, long period) throws IllegalArgumentException;
+	BukkitTask runTaskTimer(Plugin plugin, Runnable task, long delay, long period) throws IllegalArgumentException;
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskTimer(Plugin, long, long)}
 	 */
 	@Deprecated
-	public BukkitTask runTaskTimer(Plugin plugin, BukkitRunnable task, long delay, long period) throws IllegalArgumentException;
+	BukkitTask runTaskTimer(Plugin plugin, BukkitRunnable task, long delay, long period) throws IllegalArgumentException;
 
 	/**
 	 * <b>Asynchronous tasks should never access any API in Bukkit. Great care
@@ -335,11 +335,11 @@ public interface BukkitScheduler {
 	 * @throws IllegalArgumentException if plugin is null
 	 * @throws IllegalArgumentException if task is null
 	 */
-	public BukkitTask runTaskTimerAsynchronously(Plugin plugin, Runnable task, long delay, long period) throws IllegalArgumentException;
+	BukkitTask runTaskTimerAsynchronously(Plugin plugin, Runnable task, long delay, long period) throws IllegalArgumentException;
 
 	/**
 	 * @deprecated Use {@link BukkitRunnable#runTaskTimerAsynchronously(Plugin, long, long)}
 	 */
 	@Deprecated
-	public BukkitTask runTaskTimerAsynchronously(Plugin plugin, BukkitRunnable task, long delay, long period) throws IllegalArgumentException;
+	BukkitTask runTaskTimerAsynchronously(Plugin plugin, BukkitRunnable task, long delay, long period) throws IllegalArgumentException;
 }

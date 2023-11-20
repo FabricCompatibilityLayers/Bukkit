@@ -2,7 +2,7 @@ package org.bukkit.configuration.file;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class YamlConfigurationTest extends FileConfigurationTest {
 

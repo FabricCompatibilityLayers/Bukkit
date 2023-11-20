@@ -2,19 +2,18 @@ package org.bukkit.command.defaults;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.entity.HumanEntity;
 
 public class GameRuleCommand extends VanillaCommand {
 	private static final List<String> GAMERULE_STATES = ImmutableList.of("true", "false");
@@ -77,11 +76,11 @@ public class GameRuleCommand extends VanillaCommand {
 		Validate.notNull(alias, "Alias cannot be null");
 
 		if (args.length == 1) {
-			return StringUtil.copyPartialMatches(args[0], Arrays.asList(getGameWorld(sender).getGameRules()), new ArrayList<String>());
+			return StringUtil.copyPartialMatches(args[0], Arrays.asList(getGameWorld(sender).getGameRules()), new ArrayList<>());
 		}
 
 		if (args.length == 2) {
-			return StringUtil.copyPartialMatches(args[1], GAMERULE_STATES, new ArrayList<String>(GAMERULE_STATES.size()));
+			return StringUtil.copyPartialMatches(args[1], GAMERULE_STATES, new ArrayList<>(GAMERULE_STATES.size()));
 		}
 
 		return ImmutableList.of();
