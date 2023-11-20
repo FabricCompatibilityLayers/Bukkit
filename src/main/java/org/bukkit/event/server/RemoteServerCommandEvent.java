@@ -7,18 +7,18 @@ import org.bukkit.event.HandlerList;
  * Remote Server Command events
  */
 public class RemoteServerCommandEvent extends ServerCommandEvent {
-    private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 
-    public RemoteServerCommandEvent(final CommandSender sender, final String command) {
-        super(sender, command);
-    }
+	public RemoteServerCommandEvent(final CommandSender sender, final String command) {
+		super(sender, command);
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

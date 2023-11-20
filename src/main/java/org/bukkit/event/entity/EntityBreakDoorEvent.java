@@ -7,11 +7,11 @@ import org.bukkit.entity.LivingEntity;
 
 /**
  * Called when an {@link Entity} breaks a door
- * <p />
+ * <p/>
  * Canceling the event will cause the event to be delayed
  */
 public class EntityBreakDoorEvent extends EntityChangeBlockEvent {
-    public EntityBreakDoorEvent(final LivingEntity entity, final Block targetBlock) {
-        super(entity, targetBlock, Material.AIR);
-    }
+	public EntityBreakDoorEvent(final LivingEntity entity, final Block targetBlock) {
+		super(entity, targetBlock, Material.AIR);
+	}
 }

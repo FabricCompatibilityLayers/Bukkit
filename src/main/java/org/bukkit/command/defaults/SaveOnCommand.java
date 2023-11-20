@@ -6,28 +6,28 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class SaveOnCommand extends VanillaCommand {
-    public SaveOnCommand() {
-        super("save-on");
-        this.description = "Enables server autosaving";
-        this.usageMessage = "/save-on";
-        this.setPermission("bukkit.command.save.enable");
-    }
+	public SaveOnCommand() {
+		super("save-on");
+		this.description = "Enables server autosaving";
+		this.usageMessage = "/save-on";
+		this.setPermission("bukkit.command.save.enable");
+	}
 
-    @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (!testPermission(sender)) return true;
+	@Override
+	public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+		if (!testPermission(sender)) return true;
 
-        Command.broadcastCommandMessage(sender, "Enabling level saving..");
+		Command.broadcastCommandMessage(sender, "Enabling level saving..");
 
-        for (World world : Bukkit.getWorlds()) {
-            world.setAutoSave(true);
-        }
+		for (World world : Bukkit.getWorlds()) {
+			world.setAutoSave(true);
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("save-on");
-    }
+	@Override
+	public boolean matches(String input) {
+		return input.equalsIgnoreCase("save-on");
+	}
 }

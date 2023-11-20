@@ -5,37 +5,37 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class MeCommand extends VanillaCommand {
-    public MeCommand() {
-        super("me");
-        this.description = "Performs the specified action in chat";
-        this.usageMessage = "/me <action>";
-        this.setPermission("bukkit.command.me");
-    }
+	public MeCommand() {
+		super("me");
+		this.description = "Performs the specified action in chat";
+		this.usageMessage = "/me <action>";
+		this.setPermission("bukkit.command.me");
+	}
 
-    @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (!testPermission(sender)) return true;
-        if (args.length < 1)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
-        }
+	@Override
+	public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+		if (!testPermission(sender)) return true;
+		if (args.length < 1) {
+			sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+			return false;
+		}
 
-        StringBuilder message = new StringBuilder();
-        message.append(sender.getName());
-        if (args.length > 0) {
-            for (String arg : args) {
-                message.append(" ");
-                message.append(arg);
-            }
-        }
+		StringBuilder message = new StringBuilder();
+		message.append(sender.getName());
+		if (args.length > 0) {
+			for (String arg : args) {
+				message.append(" ");
+				message.append(arg);
+			}
+		}
 
-        Bukkit.broadcastMessage("* " + message.toString());
+		Bukkit.broadcastMessage("* " + message.toString());
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("me");
-    }
+	@Override
+	public boolean matches(String input) {
+		return input.equalsIgnoreCase("me");
+	}
 }

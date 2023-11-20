@@ -9,17 +9,17 @@ import java.util.concurrent.Callable;
  * Invalidating a FixedMetadataValue has no affect.
  */
 public class FixedMetadataValue extends LazyMetadataValue {
-    /**
-     * Initializes a FixedMetadataValue with an Object
-     *
-     * @param owningPlugin the {@link Plugin} that created this metadata value.
-     * @param value the value assigned to this metadata value.
-     */
-    public FixedMetadataValue(Plugin owningPlugin, final Object value) {
-        super(owningPlugin, CacheStrategy.CACHE_ETERNALLY, new Callable<Object>() {
-            public Object call() throws Exception {
-                return value;
-            }
-        });
-    }
+	/**
+	 * Initializes a FixedMetadataValue with an Object
+	 *
+	 * @param owningPlugin the {@link Plugin} that created this metadata value.
+	 * @param value        the value assigned to this metadata value.
+	 */
+	public FixedMetadataValue(Plugin owningPlugin, final Object value) {
+		super(owningPlugin, CacheStrategy.CACHE_ETERNALLY, new Callable<Object>() {
+			public Object call() throws Exception {
+				return value;
+			}
+		});
+	}
 }

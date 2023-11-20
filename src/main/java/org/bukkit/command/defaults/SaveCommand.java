@@ -6,32 +6,32 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class SaveCommand extends VanillaCommand {
-    public SaveCommand() {
-        super("save-all");
-        this.description = "Saves the server to disk";
-        this.usageMessage = "/save-all";
-        this.setPermission("bukkit.command.save.perform");
-    }
+	public SaveCommand() {
+		super("save-all");
+		this.description = "Saves the server to disk";
+		this.usageMessage = "/save-all";
+		this.setPermission("bukkit.command.save.perform");
+	}
 
-    @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (!testPermission(sender)) return true;
+	@Override
+	public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+		if (!testPermission(sender)) return true;
 
-        Command.broadcastCommandMessage(sender, "Forcing save..");
+		Command.broadcastCommandMessage(sender, "Forcing save..");
 
-        Bukkit.savePlayers();
+		Bukkit.savePlayers();
 
-        for (World world : Bukkit.getWorlds()) {
-            world.save();
-        }
+		for (World world : Bukkit.getWorlds()) {
+			world.save();
+		}
 
-        Command.broadcastCommandMessage(sender, "Save complete.");
+		Command.broadcastCommandMessage(sender, "Save complete.");
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("save-all");
-    }
+	@Override
+	public boolean matches(String input) {
+		return input.equalsIgnoreCase("save-all");
+	}
 }
