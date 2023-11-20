@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+base {
+    archivesName = "bukkit"
+}
+group = 'org.bukkit'
+version = '1.2.5-R5.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.yaml:snakeyaml:2.2'
+    implementation 'com.googlecode.json-simple:json-simple:1.1'
+    implementation 'org.avaje:ebean:2.7.3'
+    implementation 'com.google.guava:guava:32.1.3-jre'
+    implementation 'commons-lang:commons-lang:2.3'
+    testImplementation('junit:junit:4.13.2') {
+        exclude module: 'org.hamcrest:hamcrest-core'
+    }
+    testImplementation 'org.hamcrest:hamcrest-library:1.2.1'
+}
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+}
+
+publishing {
+    publications {
+        gpr(MavenPublication) {
+            groupId group
+            artifactId archivesBaseName
+            version version
+            from(components.java)
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHub"
+            url = uri("https://maven.pkg.github.com/FabricCompatibilityLayers/Bukkit")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+}
