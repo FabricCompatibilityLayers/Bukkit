@@ -7,21 +7,22 @@ import java.util.regex.Pattern;
  */
 public abstract class RegexPrompt extends ValidatingPrompt {
 
-    private Pattern pattern;
+	private Pattern pattern;
 
-    public RegexPrompt(String regex) {
-        this(Pattern.compile(regex));
-    }
+	public RegexPrompt(String regex) {
+		this(Pattern.compile(regex));
+	}
 
-    public RegexPrompt(Pattern pattern) {
-        super();
-        this.pattern = pattern;
-    }
+	public RegexPrompt(Pattern pattern) {
+		super();
+		this.pattern = pattern;
+	}
 
-    private RegexPrompt() {}
+	private RegexPrompt() {
+	}
 
-    @Override
-    protected boolean isInputValid(ConversationContext context, String input) {
-        return pattern.matcher(input).matches();
-    }
+	@Override
+	protected boolean isInputValid(ConversationContext context, String input) {
+		return pattern.matcher(input).matches();
+	}
 }

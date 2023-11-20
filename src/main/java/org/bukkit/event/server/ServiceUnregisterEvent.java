@@ -9,18 +9,18 @@ import org.bukkit.plugin.RegisteredServiceProvider;
  * events are called should not be relied upon.
  */
 public class ServiceUnregisterEvent extends ServiceEvent {
-    private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 
-    public ServiceUnregisterEvent(RegisteredServiceProvider<?> serviceProvider) {
-        super(serviceProvider);
-    }
+	public ServiceUnregisterEvent(RegisteredServiceProvider<?> serviceProvider) {
+		super(serviceProvider);
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

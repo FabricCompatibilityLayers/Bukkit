@@ -8,35 +8,35 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class OpCommand extends VanillaCommand {
-    public OpCommand() {
-        super("op");
-        this.description = "Gives the specified player operator status";
-        this.usageMessage = "/op <player>";
-        this.setPermission("bukkit.command.op.give");
-    }
+	public OpCommand() {
+		super("op");
+		this.description = "Gives the specified player operator status";
+		this.usageMessage = "/op <player>";
+		this.setPermission("bukkit.command.op.give");
+	}
 
-    @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (!testPermission(sender)) return true;
-        if (args.length != 1)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
-        }
+	@Override
+	public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+		if (!testPermission(sender)) return true;
+		if (args.length != 1) {
+			sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+			return false;
+		}
 
-        Command.broadcastCommandMessage(sender, "Opping " + args[0]);
+		Command.broadcastCommandMessage(sender, "Opping " + args[0]);
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-        player.setOp(true);
+		OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+		player.setOp(true);
 
-        if (player instanceof Player) {
-            ((Player) player).sendMessage(ChatColor.YELLOW + "You are now op!");
-        }
+		if (player instanceof Player) {
+			((Player) player).sendMessage(ChatColor.YELLOW + "You are now op!");
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("op");
-    }
+	@Override
+	public boolean matches(String input) {
+		return input.equalsIgnoreCase("op");
+	}
 }

@@ -6,29 +6,29 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class PardonCommand extends VanillaCommand {
-    public PardonCommand() {
-        super("pardon");
-        this.description = "Allows the specified player to use this server";
-        this.usageMessage = "/pardon <player>";
-        this.setPermission("bukkit.command.unban.player");
-    }
+	public PardonCommand() {
+		super("pardon");
+		this.description = "Allows the specified player to use this server";
+		this.usageMessage = "/pardon <player>";
+		this.setPermission("bukkit.command.unban.player");
+	}
 
-    @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (!testPermission(sender)) return true;
-        if (args.length != 1)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
-        }
+	@Override
+	public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+		if (!testPermission(sender)) return true;
+		if (args.length != 1) {
+			sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+			return false;
+		}
 
-        Bukkit.getOfflinePlayer(args[0]).setBanned(false);
-        Command.broadcastCommandMessage(sender, "Pardoning " + args[0]);
+		Bukkit.getOfflinePlayer(args[0]).setBanned(false);
+		Command.broadcastCommandMessage(sender, "Pardoning " + args[0]);
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("pardon");
-    }
+	@Override
+	public boolean matches(String input) {
+		return input.equalsIgnoreCase("pardon");
+	}
 }
