@@ -1,7 +1,7 @@
 package org.bukkit.plugin;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 import org.bukkit.TestServer;
 import org.bukkit.event.Event;
@@ -42,15 +42,13 @@ public class PluginManagerTest {
 	public void testAsyncLocked() throws InterruptedException {
 		final Event event = new TestEvent(true);
 		Thread secondThread = new Thread(
-				new Runnable() {
-					public void run() {
-						try {
-							synchronized (pm) {
-								pm.callEvent(event);
-							}
-						} catch (Throwable ex) {
-							store.value = ex;
+				() -> {
+					try {
+						synchronized (pm) {
+							pm.callEvent(event);
 						}
+					} catch (Throwable ex) {
+						store.value = ex;
 					}
 				}
 		);
@@ -64,13 +62,11 @@ public class PluginManagerTest {
 	public void testAsyncUnlocked() throws InterruptedException {
 		final Event event = new TestEvent(true);
 		Thread secondThread = new Thread(
-				new Runnable() {
-					public void run() {
-						try {
-							pm.callEvent(event);
-						} catch (Throwable ex) {
-							store.value = ex;
-						}
+				() -> {
+					try {
+						pm.callEvent(event);
+					} catch (Throwable ex) {
+						store.value = ex;
 					}
 				});
 		secondThread.start();
@@ -84,13 +80,11 @@ public class PluginManagerTest {
 	public void testSyncUnlocked() throws InterruptedException {
 		final Event event = new TestEvent(false);
 		Thread secondThread = new Thread(
-				new Runnable() {
-					public void run() {
-						try {
-							pm.callEvent(event);
-						} catch (Throwable ex) {
-							store.value = ex;
-						}
+				() -> {
+					try {
+						pm.callEvent(event);
+					} catch (Throwable ex) {
+						store.value = ex;
 					}
 				}
 		);
@@ -105,15 +99,13 @@ public class PluginManagerTest {
 	public void testSyncLocked() throws InterruptedException {
 		final Event event = new TestEvent(false);
 		Thread secondThread = new Thread(
-				new Runnable() {
-					public void run() {
-						try {
-							synchronized (pm) {
-								pm.callEvent(event);
-							}
-						} catch (Throwable ex) {
-							store.value = ex;
+				() -> {
+					try {
+						synchronized (pm) {
+							pm.callEvent(event);
 						}
+					} catch (Throwable ex) {
+						store.value = ex;
 					}
 				}
 		);

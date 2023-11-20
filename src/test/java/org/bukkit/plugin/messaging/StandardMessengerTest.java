@@ -7,8 +7,10 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class StandardMessengerTest {
 	public StandardMessenger getMessenger() {
@@ -18,7 +20,7 @@ public class StandardMessengerTest {
 	private int count = 0;
 
 	public TestPlugin getPlugin() {
-		return new TestPlugin("" + count++);
+		return new TestPlugin(String.valueOf(count++));
 	}
 
 	@Test
@@ -286,6 +288,7 @@ public class StandardMessengerTest {
 		assertEquals(messenger.getIncomingChannelRegistrations(plugin3, "qux"));
 	}
 
+	@SafeVarargs
 	private static <T> void assertEquals(Collection<T> actual, T... expected) {
 		assertThat("Size of the array", actual.size(), is(expected.length));
 		assertThat(actual, hasItems(expected));
