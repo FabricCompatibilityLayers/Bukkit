@@ -10,59 +10,57 @@ import org.bukkit.Material;
  */
 public class SmoothBrick extends TexturedMaterial {
 
-    private static final List<Material> textures = new ArrayList<Material>();
-    static {
-        textures.add(Material.STONE);
-        textures.add(Material.MOSSY_COBBLESTONE);
-        textures.add(Material.COBBLESTONE);
-        textures.add(Material.SMOOTH_BRICK);
-    }
+	private static final List<Material> textures = new ArrayList<Material>();
 
-    public SmoothBrick() {
-        super(Material.SMOOTH_BRICK);
-    }
+	static {
+		textures.add(Material.STONE);
+		textures.add(Material.MOSSY_COBBLESTONE);
+		textures.add(Material.COBBLESTONE);
+		textures.add(Material.SMOOTH_BRICK);
+	}
 
-    /**
-     *
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public SmoothBrick(final int type) {
-        super(type);
-    }
+	public SmoothBrick() {
+		super(Material.SMOOTH_BRICK);
+	}
 
-    public SmoothBrick(final Material type) {
-        super((textures.contains(type)) ? Material.SMOOTH_BRICK : type);
-        if (textures.contains(type)) {
-            setMaterial(type);
-        }
-    }
+	/**
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public SmoothBrick(final int type) {
+		super(type);
+	}
 
-    /**
-     *
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public SmoothBrick(final int type, final byte data) {
-        super(type, data);
-    }
+	public SmoothBrick(final Material type) {
+		super((textures.contains(type)) ? Material.SMOOTH_BRICK : type);
+		if (textures.contains(type)) {
+			setMaterial(type);
+		}
+	}
 
-    /**
-     *
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public SmoothBrick(final Material type, final byte data) {
-        super(type, data);
-    }
+	/**
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public SmoothBrick(final int type, final byte data) {
+		super(type, data);
+	}
 
-    @Override
-    public List<Material> getTextures() {
-        return textures;
-    }
+	/**
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public SmoothBrick(final Material type, final byte data) {
+		super(type, data);
+	}
 
-    @Override
-    public SmoothBrick clone() {
-        return (SmoothBrick) super.clone();
-    }
+	@Override
+	public List<Material> getTextures() {
+		return textures;
+	}
+
+	@Override
+	public SmoothBrick clone() {
+		return (SmoothBrick) super.clone();
+	}
 }

@@ -12,25 +12,25 @@ import java.util.logging.Logger;
  * @see Logger
  */
 public class PluginLogger extends Logger {
-    private String pluginName;
+	private String pluginName;
 
-    /**
-     * Creates a new PluginLogger that extracts the name from a plugin.
-     *
-     * @param context A reference to the plugin
-     */
-    public PluginLogger(Plugin context) {
-        super(context.getClass().getCanonicalName(), null);
-        String prefix = context.getDescription().getPrefix();
-        pluginName = prefix != null ? new StringBuilder().append("[").append(prefix).append("] ").toString() : "[" + context.getDescription().getName() + "] ";
-        setParent(context.getServer().getLogger());
-        setLevel(Level.ALL);
-    }
+	/**
+	 * Creates a new PluginLogger that extracts the name from a plugin.
+	 *
+	 * @param context A reference to the plugin
+	 */
+	public PluginLogger(Plugin context) {
+		super(context.getClass().getCanonicalName(), null);
+		String prefix = context.getDescription().getPrefix();
+		pluginName = prefix != null ? new StringBuilder().append("[").append(prefix).append("] ").toString() : "[" + context.getDescription().getName() + "] ";
+		setParent(context.getServer().getLogger());
+		setLevel(Level.ALL);
+	}
 
-    @Override
-    public void log(LogRecord logRecord) {
-        logRecord.setMessage(pluginName + logRecord.getMessage());
-        super.log(logRecord);
-    }
+	@Override
+	public void log(LogRecord logRecord) {
+		logRecord.setMessage(pluginName + logRecord.getMessage());
+		super.log(logRecord);
+	}
 
 }

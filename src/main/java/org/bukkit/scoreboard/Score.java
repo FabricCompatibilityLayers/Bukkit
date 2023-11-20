@@ -9,53 +9,56 @@ import org.bukkit.OfflinePlayer;
  */
 public interface Score {
 
-    /**
-     * Gets the OfflinePlayer being tracked by this Score
-     *
-     * @return this Score's tracked player
-     * @deprecated Scoreboards can contain entries that aren't players
-     * @see #getEntry()
-     */
-    @Deprecated
-    OfflinePlayer getPlayer();
+	/**
+	 * Gets the OfflinePlayer being tracked by this Score
+	 *
+	 * @return this Score's tracked player
+	 *
+	 * @see #getEntry()
+	 * @deprecated Scoreboards can contain entries that aren't players
+	 */
+	@Deprecated
+	OfflinePlayer getPlayer();
 
-    /**
-     * Gets the entry being tracked by this Score
-     *
-     * @return this Score's tracked entry
-     */
-    String getEntry();
+	/**
+	 * Gets the entry being tracked by this Score
+	 *
+	 * @return this Score's tracked entry
+	 */
+	String getEntry();
 
-    /**
-     * Gets the Objective being tracked by this Score
-     *
-     * @return this Score's tracked objective
-     */
-    Objective getObjective();
+	/**
+	 * Gets the Objective being tracked by this Score
+	 *
+	 * @return this Score's tracked objective
+	 */
+	Objective getObjective();
 
-    /**
-     * Gets the current score
-     *
-     * @return the current score
-     * @throws IllegalStateException if the associated objective has been
-     *     unregistered
-     */
-    int getScore() throws IllegalStateException;
+	/**
+	 * Gets the current score
+	 *
+	 * @return the current score
+	 *
+	 * @throws IllegalStateException if the associated objective has been
+	 *                               unregistered
+	 */
+	int getScore() throws IllegalStateException;
 
-    /**
-     * Sets the current score.
-     *
-     * @param score New score
-     * @throws IllegalStateException if the associated objective has been
-     *     unregistered
-     */
-    void setScore(int score) throws IllegalStateException;
+	/**
+	 * Sets the current score.
+	 *
+	 * @param score New score
+	 *
+	 * @throws IllegalStateException if the associated objective has been
+	 *                               unregistered
+	 */
+	void setScore(int score) throws IllegalStateException;
 
-    /**
-     * Gets the scoreboard for the associated objective.
-     *
-     * @return the owning objective's scoreboard, or null if it has been
-     *     {@link Objective#unregister() unregistered}
-     */
-    Scoreboard getScoreboard();
+	/**
+	 * Gets the scoreboard for the associated objective.
+	 *
+	 * @return the owning objective's scoreboard, or null if it has been
+	 * {@link Objective#unregister() unregistered}
+	 */
+	Scoreboard getScoreboard();
 }

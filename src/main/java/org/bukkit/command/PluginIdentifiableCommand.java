@@ -10,10 +10,10 @@ import org.bukkit.plugin.Plugin;
  */
 public interface PluginIdentifiableCommand {
 
-    /**
-     * Gets the owner of this PluginIdentifiableCommand.
-     *
-     * @return Plugin that owns this PluginIdentifiableCommand.
-     */
-    public Plugin getPlugin();
+	/**
+	 * Gets the owner of this PluginIdentifiableCommand.
+	 *
+	 * @return Plugin that owns this PluginIdentifiableCommand.
+	 */
+	public Plugin getPlugin();
 }

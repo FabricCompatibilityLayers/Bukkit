@@ -30,13 +30,14 @@ import org.bukkit.command.Command;
  * @param <TCommand> The base class for your custom commands.
  */
 public interface HelpTopicFactory<TCommand extends Command> {
-    /**
-     * This method accepts a command deriving from a custom command base class
-     * and constructs a custom HelpTopic for it.
-     *
-     * @param command The custom command to build a help topic for.
-     * @return A new custom help topic or {@code null} to intentionally NOT
-     *     create a topic.
-     */
-    public HelpTopic createTopic(TCommand command);
+	/**
+	 * This method accepts a command deriving from a custom command base class
+	 * and constructs a custom HelpTopic for it.
+	 *
+	 * @param command The custom command to build a help topic for.
+	 *
+	 * @return A new custom help topic or {@code null} to intentionally NOT
+	 * create a topic.
+	 */
+	public HelpTopic createTopic(TCommand command);
 }

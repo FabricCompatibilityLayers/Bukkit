@@ -16,21 +16,21 @@ import java.util.List;
  * block.
  */
 public class BlockMultiPlaceEvent extends BlockPlaceEvent {
-    private final List<BlockState> states;
+	private final List<BlockState> states;
 
-    public BlockMultiPlaceEvent(List<BlockState> states, Block clicked, ItemStack itemInHand, Player thePlayer, boolean canBuild) {
-        super(states.get(0).getBlock(), states.get(0), clicked, itemInHand, thePlayer, canBuild);
-        this.states = ImmutableList.copyOf(states);
-    }
+	public BlockMultiPlaceEvent(List<BlockState> states, Block clicked, ItemStack itemInHand, Player thePlayer, boolean canBuild) {
+		super(states.get(0).getBlock(), states.get(0), clicked, itemInHand, thePlayer, canBuild);
+		this.states = ImmutableList.copyOf(states);
+	}
 
-    /**
-     * Gets a list of blockstates for all blocks which were replaced by the
-     * placement of the new blocks. Most of these blocks will just have a
-     * Material type of AIR.
-     *
-     * @return immutable list of replaced BlockStates
-     */
-    public List<BlockState> getReplacedBlockStates() {
-        return states;
-    }
+	/**
+	 * Gets a list of blockstates for all blocks which were replaced by the
+	 * placement of the new blocks. Most of these blocks will just have a
+	 * Material type of AIR.
+	 *
+	 * @return immutable list of replaced BlockStates
+	 */
+	public List<BlockState> getReplacedBlockStates() {
+		return states;
+	}
 }

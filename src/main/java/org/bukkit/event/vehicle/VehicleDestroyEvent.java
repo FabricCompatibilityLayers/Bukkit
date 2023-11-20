@@ -11,38 +11,38 @@ import org.bukkit.event.HandlerList;
  * 'removed' due to other means.
  */
 public class VehicleDestroyEvent extends VehicleEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private final Entity attacker;
-    private boolean cancelled;
+	private static final HandlerList handlers = new HandlerList();
+	private final Entity attacker;
+	private boolean cancelled;
 
-    public VehicleDestroyEvent(final Vehicle vehicle, final Entity attacker) {
-        super(vehicle);
-        this.attacker = attacker;
-    }
+	public VehicleDestroyEvent(final Vehicle vehicle, final Entity attacker) {
+		super(vehicle);
+		this.attacker = attacker;
+	}
 
-    /**
-     * Gets the Entity that has destroyed the vehicle, potentially null
-     *
-     * @return the Entity that has destroyed the vehicle, potentially null
-     */
-    public Entity getAttacker() {
-        return attacker;
-    }
+	/**
+	 * Gets the Entity that has destroyed the vehicle, potentially null
+	 *
+	 * @return the Entity that has destroyed the vehicle, potentially null
+	 */
+	public Entity getAttacker() {
+		return attacker;
+	}
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
+	public boolean isCancelled() {
+		return cancelled;
+	}
 
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
+	public void setCancelled(boolean cancel) {
+		this.cancelled = cancel;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

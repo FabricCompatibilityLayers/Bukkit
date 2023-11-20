@@ -22,82 +22,83 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
+ *
  */
 public class MetadataConversionTest {
-    private Plugin plugin = new TestPlugin("x");
-    private FixedMetadataValue subject;
+	private Plugin plugin = new TestPlugin("x");
+	private FixedMetadataValue subject;
 
-    private void setSubject(Object value) {
-        subject = new FixedMetadataValue(plugin, value);
-    }
+	private void setSubject(Object value) {
+		subject = new FixedMetadataValue(plugin, value);
+	}
 
-    @Test
-    public void testFromInt() {
-        setSubject(10);
+	@Test
+	public void testFromInt() {
+		setSubject(10);
 
-        assertEquals(10, subject.asInt());
-        assertEquals(10, subject.asFloat(), 0.000001);
-        assertEquals(10, subject.asDouble(), 0.000001);
-        assertEquals(10, subject.asLong());
-        assertEquals(10, subject.asShort());
-        assertEquals(10, subject.asByte());
-        assertEquals(true, subject.asBoolean());
-        assertEquals("10", subject.asString());
-    }
+		assertEquals(10, subject.asInt());
+		assertEquals(10, subject.asFloat(), 0.000001);
+		assertEquals(10, subject.asDouble(), 0.000001);
+		assertEquals(10, subject.asLong());
+		assertEquals(10, subject.asShort());
+		assertEquals(10, subject.asByte());
+		assertEquals(true, subject.asBoolean());
+		assertEquals("10", subject.asString());
+	}
 
-    @Test
-    public void testFromFloat() {
-        setSubject(10.5);
+	@Test
+	public void testFromFloat() {
+		setSubject(10.5);
 
-        assertEquals(10, subject.asInt());
-        assertEquals(10.5, subject.asFloat(), 0.000001);
-        assertEquals(10.5, subject.asDouble(), 0.000001);
-        assertEquals(10, subject.asLong());
-        assertEquals(10, subject.asShort());
-        assertEquals(10, subject.asByte());
-        assertEquals(true, subject.asBoolean());
-        assertEquals("10.5", subject.asString());
-    }
+		assertEquals(10, subject.asInt());
+		assertEquals(10.5, subject.asFloat(), 0.000001);
+		assertEquals(10.5, subject.asDouble(), 0.000001);
+		assertEquals(10, subject.asLong());
+		assertEquals(10, subject.asShort());
+		assertEquals(10, subject.asByte());
+		assertEquals(true, subject.asBoolean());
+		assertEquals("10.5", subject.asString());
+	}
 
-    @Test
-    public void testFromNumericString() {
-        setSubject("10");
+	@Test
+	public void testFromNumericString() {
+		setSubject("10");
 
-        assertEquals(10, subject.asInt());
-        assertEquals(10, subject.asFloat(), 0.000001);
-        assertEquals(10, subject.asDouble(), 0.000001);
-        assertEquals(10, subject.asLong());
-        assertEquals(10, subject.asShort());
-        assertEquals(10, subject.asByte());
-        assertEquals(false, subject.asBoolean());
-        assertEquals("10", subject.asString());
-    }
+		assertEquals(10, subject.asInt());
+		assertEquals(10, subject.asFloat(), 0.000001);
+		assertEquals(10, subject.asDouble(), 0.000001);
+		assertEquals(10, subject.asLong());
+		assertEquals(10, subject.asShort());
+		assertEquals(10, subject.asByte());
+		assertEquals(false, subject.asBoolean());
+		assertEquals("10", subject.asString());
+	}
 
-    @Test
-    public void testFromNonNumericString() {
-        setSubject("true");
+	@Test
+	public void testFromNonNumericString() {
+		setSubject("true");
 
-        assertEquals(0, subject.asInt());
-        assertEquals(0, subject.asFloat(), 0.000001);
-        assertEquals(0, subject.asDouble(), 0.000001);
-        assertEquals(0, subject.asLong());
-        assertEquals(0, subject.asShort());
-        assertEquals(0, subject.asByte());
-        assertEquals(true, subject.asBoolean());
-        assertEquals("true", subject.asString());
-    }
+		assertEquals(0, subject.asInt());
+		assertEquals(0, subject.asFloat(), 0.000001);
+		assertEquals(0, subject.asDouble(), 0.000001);
+		assertEquals(0, subject.asLong());
+		assertEquals(0, subject.asShort());
+		assertEquals(0, subject.asByte());
+		assertEquals(true, subject.asBoolean());
+		assertEquals("true", subject.asString());
+	}
 
-    @Test
-    public void testFromNull() {
-        setSubject(null);
+	@Test
+	public void testFromNull() {
+		setSubject(null);
 
-        assertEquals(0, subject.asInt());
-        assertEquals(0, subject.asFloat(), 0.000001);
-        assertEquals(0, subject.asDouble(), 0.000001);
-        assertEquals(0, subject.asLong());
-        assertEquals(0, subject.asShort());
-        assertEquals(0, subject.asByte());
-        assertEquals(false, subject.asBoolean());
-        assertEquals("", subject.asString());
-    }
+		assertEquals(0, subject.asInt());
+		assertEquals(0, subject.asFloat(), 0.000001);
+		assertEquals(0, subject.asDouble(), 0.000001);
+		assertEquals(0, subject.asLong());
+		assertEquals(0, subject.asShort());
+		assertEquals(0, subject.asByte());
+		assertEquals(false, subject.asBoolean());
+		assertEquals("", subject.asString());
+	}
 }

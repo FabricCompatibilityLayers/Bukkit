@@ -10,18 +10,18 @@ import org.bukkit.inventory.ItemStack;
  * Inventory while in creative mode.
  */
 public class InventoryCreativeEvent extends InventoryClickEvent {
-    private ItemStack item;
+	private ItemStack item;
 
-    public InventoryCreativeEvent(InventoryView what, SlotType type, int slot, ItemStack newItem) {
-        super(what, type, slot, ClickType.CREATIVE, InventoryAction.PLACE_ALL);
-        this.item = newItem;
-    }
+	public InventoryCreativeEvent(InventoryView what, SlotType type, int slot, ItemStack newItem) {
+		super(what, type, slot, ClickType.CREATIVE, InventoryAction.PLACE_ALL);
+		this.item = newItem;
+	}
 
-    public ItemStack getCursor() {
-        return item;
-    }
+	public ItemStack getCursor() {
+		return item;
+	}
 
-    public void setCursor(ItemStack item) {
-        this.item = item;
-    }
+	public void setCursor(ItemStack item) {
+		this.item = item;
+	}
 }

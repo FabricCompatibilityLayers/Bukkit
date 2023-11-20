@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * This is solely meant for identifying methods that don't need to be
  * overridden / handled manually.
  */
-@Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
+@Target({ ElementType.CONSTRUCTOR, ElementType.METHOD })
 @Retention(RetentionPolicy.SOURCE)
 public @interface Utility {
 }

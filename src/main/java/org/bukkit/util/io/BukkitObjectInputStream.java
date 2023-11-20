@@ -18,46 +18,42 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
  */
 public class BukkitObjectInputStream extends ObjectInputStream {
 
-    /**
-     * Constructor provided to mirror super functionality.
-     *
-     * @throws IOException
-     * @throws SecurityException
-     * @see ObjectInputStream#ObjectInputStream()
-     */
-    protected BukkitObjectInputStream() throws IOException, SecurityException {
-        super();
-        super.enableResolveObject(true);
-    }
+	/**
+	 * Constructor provided to mirror super functionality.
+	 *
+	 * @see ObjectInputStream#ObjectInputStream()
+	 */
+	protected BukkitObjectInputStream() throws IOException, SecurityException {
+		super();
+		super.enableResolveObject(true);
+	}
 
-    /**
-     * Object input stream decoration constructor.
-     *
-     * @param in
-     * @throws IOException
-     * @see ObjectInputStream#ObjectInputStream(InputStream)
-     */
-    public BukkitObjectInputStream(InputStream in) throws IOException {
-        super(in);
-        super.enableResolveObject(true);
-    }
+	/**
+	 * Object input stream decoration constructor.
+	 *
+	 * @see ObjectInputStream#ObjectInputStream(InputStream)
+	 */
+	public BukkitObjectInputStream(InputStream in) throws IOException {
+		super(in);
+		super.enableResolveObject(true);
+	}
 
-    @Override
-    protected Object resolveObject(Object obj) throws IOException {
-        if (obj instanceof Wrapper) {
-            try {
-                (obj = ConfigurationSerialization.deserializeObject(((Wrapper<?>) obj).map)).getClass(); // NPE
-            } catch (Throwable ex) {
-                throw newIOException("Failed to deserialize object", ex);
-            }
-        }
+	@Override
+	protected Object resolveObject(Object obj) throws IOException {
+		if (obj instanceof Wrapper) {
+			try {
+				(obj = ConfigurationSerialization.deserializeObject(((Wrapper<?>) obj).map)).getClass(); // NPE
+			} catch (Throwable ex) {
+				throw newIOException("Failed to deserialize object", ex);
+			}
+		}
 
-        return super.resolveObject(obj);
-    }
+		return super.resolveObject(obj);
+	}
 
-    private static IOException newIOException(String string, Throwable cause) {
-        IOException exception = new IOException(string);
-        exception.initCause(cause);
-        return exception;
-    }
+	private static IOException newIOException(String string, Throwable cause) {
+		IOException exception = new IOException(string);
+		exception.initCause(cause);
+		return exception;
+	}
 }

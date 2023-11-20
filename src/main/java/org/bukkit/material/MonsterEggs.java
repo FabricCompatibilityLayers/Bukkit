@@ -10,58 +10,56 @@ import org.bukkit.Material;
  */
 public class MonsterEggs extends TexturedMaterial {
 
-    private static final List<Material> textures = new ArrayList<Material>();
-    static {
-        textures.add(Material.STONE);
-        textures.add(Material.COBBLESTONE);
-        textures.add(Material.SMOOTH_BRICK);
-    }
+	private static final List<Material> textures = new ArrayList<Material>();
 
-    public MonsterEggs() {
-        super(Material.MONSTER_EGGS);
-    }
+	static {
+		textures.add(Material.STONE);
+		textures.add(Material.COBBLESTONE);
+		textures.add(Material.SMOOTH_BRICK);
+	}
 
-    /**
-     *
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public MonsterEggs(final int type) {
-        super(type);
-    }
+	public MonsterEggs() {
+		super(Material.MONSTER_EGGS);
+	}
 
-    public MonsterEggs(final Material type) {
-        super((textures.contains(type)) ? Material.MONSTER_EGGS : type);
-        if (textures.contains(type)) {
-            setMaterial(type);
-        }
-    }
+	/**
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public MonsterEggs(final int type) {
+		super(type);
+	}
 
-    /**
-     *
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public MonsterEggs(final int type, final byte data) {
-        super(type, data);
-    }
+	public MonsterEggs(final Material type) {
+		super((textures.contains(type)) ? Material.MONSTER_EGGS : type);
+		if (textures.contains(type)) {
+			setMaterial(type);
+		}
+	}
 
-    /**
-     *
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public MonsterEggs(final Material type, final byte data) {
-        super(type, data);
-    }
+	/**
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public MonsterEggs(final int type, final byte data) {
+		super(type, data);
+	}
 
-    @Override
-    public List<Material> getTextures() {
-        return textures;
-    }
+	/**
+	 * @deprecated Magic value
+	 */
+	@Deprecated
+	public MonsterEggs(final Material type, final byte data) {
+		super(type, data);
+	}
 
-    @Override
-    public MonsterEggs clone() {
-        return (MonsterEggs) super.clone();
-    }
+	@Override
+	public List<Material> getTextures() {
+		return textures;
+	}
+
+	@Override
+	public MonsterEggs clone() {
+		return (MonsterEggs) super.clone();
+	}
 }

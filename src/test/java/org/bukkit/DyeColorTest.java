@@ -18,53 +18,54 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class DyeColorTest {
 
-    @Parameters(name= "{index}: {0}")
-    public static List<Object[]> data() {
-        List<Object[]> list = new ArrayList<Object[]>();
-        for (DyeColor dye : DyeColor.values()) {
-            list.add(new Object[] {dye});
-        }
-        return list;
-    }
+	@Parameters(name = "{index}: {0}")
+	public static List<Object[]> data() {
+		List<Object[]> list = new ArrayList<Object[]>();
+		for (DyeColor dye : DyeColor.values()) {
+			list.add(new Object[] { dye });
+		}
+		return list;
+	}
 
-    @Parameter public DyeColor dye;
+	@Parameter
+	public DyeColor dye;
 
-    @Test
-    @SuppressWarnings("deprecation")
-    public void getByData() {
-        byte data = dye.getData();
+	@Test
+	@SuppressWarnings("deprecation")
+	public void getByData() {
+		byte data = dye.getData();
 
-        DyeColor byData = DyeColor.getByData(data);
-        assertThat(byData, is(dye));
-    }
+		DyeColor byData = DyeColor.getByData(data);
+		assertThat(byData, is(dye));
+	}
 
-    @Test
-    public void getByWoolData() {
-        byte data = dye.getWoolData();
+	@Test
+	public void getByWoolData() {
+		byte data = dye.getWoolData();
 
-        DyeColor byData = DyeColor.getByWoolData(data);
-        assertThat(byData, is(dye));
-    }
+		DyeColor byData = DyeColor.getByWoolData(data);
+		assertThat(byData, is(dye));
+	}
 
-    @Test
-    public void getByDyeData() {
-        byte data = dye.getDyeData();
+	@Test
+	public void getByDyeData() {
+		byte data = dye.getDyeData();
 
-        DyeColor byData = DyeColor.getByDyeData(data);
-        assertThat(byData, is(dye));
-    }
+		DyeColor byData = DyeColor.getByDyeData(data);
+		assertThat(byData, is(dye));
+	}
 
-    @Test
-    public void getDyeDyeColor() {
-        testColorable(new Dye(Material.INK_SACK, dye.getDyeData()));
-    }
+	@Test
+	public void getDyeDyeColor() {
+		testColorable(new Dye(Material.INK_SACK, dye.getDyeData()));
+	}
 
-    @Test
-    public void getWoolDyeColor() {
-        testColorable(new Wool(Material.WOOL, dye.getWoolData()));
-    }
+	@Test
+	public void getWoolDyeColor() {
+		testColorable(new Wool(Material.WOOL, dye.getWoolData()));
+	}
 
-    private void testColorable(final Colorable colorable) {
-        assertThat(colorable.getColor(), is(this.dye));
-    }
+	private void testColorable(final Colorable colorable) {
+		assertThat(colorable.getColor(), is(this.dye));
+	}
 }

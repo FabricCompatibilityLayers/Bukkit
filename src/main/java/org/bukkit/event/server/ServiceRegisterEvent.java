@@ -10,18 +10,18 @@ import org.bukkit.plugin.RegisteredServiceProvider;
  * should not be relied upon.
  */
 public class ServiceRegisterEvent extends ServiceEvent {
-    private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 
-    public ServiceRegisterEvent(RegisteredServiceProvider<?> registeredProvider) {
-        super(registeredProvider);
-    }
+	public ServiceRegisterEvent(RegisteredServiceProvider<?> registeredProvider) {
+		super(registeredProvider);
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

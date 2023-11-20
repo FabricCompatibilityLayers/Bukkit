@@ -6,11 +6,11 @@ package org.bukkit.permissions;
  */
 public interface PermissionRemovedExecutor {
 
-    /**
-     * Called when a {@link PermissionAttachment} is removed from a {@link
-     * Permissible}
-     *
-     * @param attachment Attachment which was removed
-     */
-    public void attachmentRemoved(PermissionAttachment attachment);
+	/**
+	 * Called when a {@link PermissionAttachment} is removed from a {@link
+	 * Permissible}
+	 *
+	 * @param attachment Attachment which was removed
+	 */
+	public void attachmentRemoved(PermissionAttachment attachment);
 }
