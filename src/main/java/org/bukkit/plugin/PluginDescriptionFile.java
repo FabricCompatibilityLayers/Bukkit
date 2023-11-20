@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
@@ -19,7 +20,7 @@ import com.google.common.collect.ImmutableMap;
  * Provides access to a Plugins description file, plugin.yaml
  */
 public final class PluginDescriptionFile {
-    private static final Yaml yaml = new Yaml(new SafeConstructor());
+    private static final Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
     private String name = null;
     private String main = null;
     private String classLoaderOf = null;
@@ -39,7 +40,7 @@ public final class PluginDescriptionFile {
     private PermissionDefault defaultPerm = PermissionDefault.OP;
 
     public PluginDescriptionFile(final InputStream stream) throws InvalidDescriptionException {
-        loadMap((Map<?, ?>) yaml.load(stream));
+        loadMap(yaml.load(stream));
     }
 
     /**
@@ -49,7 +50,7 @@ public final class PluginDescriptionFile {
      * @throws InvalidDescriptionException If the PluginDescriptionFile is invalid
      */
     public PluginDescriptionFile(final Reader reader) throws InvalidDescriptionException {
-        loadMap((Map<?, ?>) yaml.load(reader));
+        loadMap(yaml.load(reader));
     }
 
     /**
@@ -162,7 +163,7 @@ public final class PluginDescriptionFile {
     public List<Permission> getPermissions() {
         if (permissions == null) {
             if (lazyPermissions == null) {
-                permissions = ImmutableList.<Permission>of();
+                permissions = ImmutableList.of();
             } else {
                 permissions = ImmutableList.copyOf(Permission.loadPermissions(lazyPermissions, "Permission node '%s' in plugin description file for " + getFullName() + " is invalid", defaultPerm));
                 lazyPermissions = null;
@@ -216,15 +217,15 @@ public final class PluginDescriptionFile {
         }
 
         if (map.get("commands") != null) {
-            ImmutableMap.Builder<String, Map<String, Object>> commandsBuilder = ImmutableMap.<String, Map<String, Object>>builder();
+            ImmutableMap.Builder<String, Map<String, Object>> commandsBuilder = ImmutableMap.builder();
             try {
                 for (Map.Entry<?, ?> command : ((Map<?, ?>) map.get("commands")).entrySet()) {
-                    ImmutableMap.Builder<String, Object> commandBuilder = ImmutableMap.<String, Object>builder();
+                    ImmutableMap.Builder<String, Object> commandBuilder = ImmutableMap.builder();
                     if (command.getValue() != null) {
                         for (Map.Entry<?, ?> commandEntry : ((Map<?, ?>) command.getValue()).entrySet()) {
                             if (commandEntry.getValue() instanceof Iterable) {
                                 // This prevents internal alias list changes
-                                ImmutableList.Builder<Object> commandSubList = ImmutableList.<Object>builder();
+                                ImmutableList.Builder<Object> commandSubList = ImmutableList.builder();
                                 for (Object commandSubListItem : (Iterable<?>) commandEntry.getValue()) {
                                     if (commandSubListItem != null) {
                                         commandSubList.add(commandSubListItem);
@@ -249,7 +250,7 @@ public final class PluginDescriptionFile {
         }
 
         if (map.get("depend") != null) {
-            ImmutableList.Builder<String> dependBuilder = ImmutableList.<String>builder();
+            ImmutableList.Builder<String> dependBuilder = ImmutableList.builder();
             try {
                 for (Object dependency : (Iterable<?>) map.get("depend")) {
                     dependBuilder.add(dependency.toString());
@@ -263,7 +264,7 @@ public final class PluginDescriptionFile {
         }
 
         if (map.get("softdepend") != null) {
-            ImmutableList.Builder<String> softDependBuilder = ImmutableList.<String>builder();
+            ImmutableList.Builder<String> softDependBuilder = ImmutableList.builder();
             try {
                 for (Object dependency : (Iterable<?>) map.get("softdepend")) {
                     softDependBuilder.add(dependency.toString());
@@ -277,7 +278,7 @@ public final class PluginDescriptionFile {
         }
 
         if (map.get("loadbefore") != null) {
-            ImmutableList.Builder<String> loadBeforeBuilder = ImmutableList.<String>builder();
+            ImmutableList.Builder<String> loadBeforeBuilder = ImmutableList.builder();
             try {
                 for (Object predependency : (Iterable<?>) map.get("loadbefore")) {
                     loadBeforeBuilder.add(predependency.toString());
@@ -317,7 +318,7 @@ public final class PluginDescriptionFile {
         }
 
         if (map.get("authors") != null) {
-            ImmutableList.Builder<String> authorsBuilder = ImmutableList.<String>builder();
+            ImmutableList.Builder<String> authorsBuilder = ImmutableList.builder();
             if (map.get("author") != null) {
                 authorsBuilder.add(map.get("author").toString());
             }
@@ -334,7 +335,7 @@ public final class PluginDescriptionFile {
         } else if (map.get("author") != null) {
             authors = ImmutableList.of(map.get("author").toString());
         } else {
-            authors = ImmutableList.<String>of();
+            authors = ImmutableList.of();
         }
 
         if (map.get("default-permission") != null) {
@@ -359,7 +360,7 @@ public final class PluginDescriptionFile {
     }
 
     private Map<String, Object> saveMap() {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("name", name);
         map.put("main", main);
