@@ -1,288 +1,294 @@
 package org.bukkit.plugin.messaging;
 
 import org.bukkit.plugin.TestPlugin;
+
 import java.util.Collection;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.*;
 
 public class StandardMessengerTest {
-    public StandardMessenger getMessenger() {
-        return new StandardMessenger();
-    }
+	private int count = 0;
 
-    private int count = 0;
-    public TestPlugin getPlugin() {
-        return new TestPlugin("" + count++);
-    }
+	@SafeVarargs
+	private static <T> void assertEquals(Collection<T> actual, T... expected) {
+		assertThat("Size of the array", actual.size(), is(expected.length));
+		assertThat(actual, hasItems(expected));
+	}
 
-    @Test
-    public void testIsReservedChannel() {
-        Messenger messenger = getMessenger();
+	public StandardMessenger getMessenger() {
+		return new StandardMessenger();
+	}
 
-        assertTrue(messenger.isReservedChannel("REGISTER"));
-        assertFalse(messenger.isReservedChannel("register"));
-        assertTrue(messenger.isReservedChannel("UNREGISTER"));
-        assertFalse(messenger.isReservedChannel("unregister"));
-        assertFalse(messenger.isReservedChannel("notReserved"));
-    }
+	public TestPlugin getPlugin() {
+		return new TestPlugin(String.valueOf(count++));
+	}
 
-    @Test
-    public void testRegisterAndUnregisterOutgoingPluginChannel() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
+	@Test
+	public void testIsReservedChannel() {
+		Messenger messenger = getMessenger();
 
-        assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
-        messenger.registerOutgoingPluginChannel(plugin, "foo");
-        assertTrue(messenger.isOutgoingChannelRegistered(plugin, "foo"));
-        assertFalse(messenger.isOutgoingChannelRegistered(plugin, "bar"));
+		assertTrue(messenger.isReservedChannel("REGISTER"));
+		assertFalse(messenger.isReservedChannel("register"));
+		assertTrue(messenger.isReservedChannel("UNREGISTER"));
+		assertFalse(messenger.isReservedChannel("unregister"));
+		assertFalse(messenger.isReservedChannel("notReserved"));
+	}
 
-        messenger.unregisterOutgoingPluginChannel(plugin, "foo");
-        assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
-    }
+	@Test
+	public void testRegisterAndUnregisterOutgoingPluginChannel() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
 
-    @Test(expected = ReservedChannelException.class)
-    public void testReservedOutgoingRegistration() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
+		assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
+		messenger.registerOutgoingPluginChannel(plugin, "foo");
+		assertTrue(messenger.isOutgoingChannelRegistered(plugin, "foo"));
+		assertFalse(messenger.isOutgoingChannelRegistered(plugin, "bar"));
 
-        messenger.registerOutgoingPluginChannel(plugin, "REGISTER");
-    }
+		messenger.unregisterOutgoingPluginChannel(plugin, "foo");
+		assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
+	}
 
-    @Test
-    public void testUnregisterOutgoingPluginChannel_Plugin() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
+	@Test(expected = ReservedChannelException.class)
+	public void testReservedOutgoingRegistration() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
 
-        assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
-        messenger.registerOutgoingPluginChannel(plugin, "foo");
-        messenger.registerOutgoingPluginChannel(plugin, "bar");
-        assertTrue(messenger.isOutgoingChannelRegistered(plugin, "foo"));
-        assertTrue(messenger.isOutgoingChannelRegistered(plugin, "bar"));
+		messenger.registerOutgoingPluginChannel(plugin, "REGISTER");
+	}
 
-        messenger.unregisterOutgoingPluginChannel(plugin);
-        assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
-        assertFalse(messenger.isOutgoingChannelRegistered(plugin, "bar"));
-    }
+	@Test
+	public void testUnregisterOutgoingPluginChannel_Plugin() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
 
-    @Test
-    public void testRegisterIncomingPluginChannel() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
-        TestMessageListener listener = new TestMessageListener("foo", "bar".getBytes());
-        TestPlayer player = new TestPlayer();
-        PluginMessageListenerRegistration registration = messenger.registerIncomingPluginChannel(plugin, "foo", listener);
+		assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
+		messenger.registerOutgoingPluginChannel(plugin, "foo");
+		messenger.registerOutgoingPluginChannel(plugin, "bar");
+		assertTrue(messenger.isOutgoingChannelRegistered(plugin, "foo"));
+		assertTrue(messenger.isOutgoingChannelRegistered(plugin, "bar"));
 
-        assertTrue(registration.isValid());
-        assertTrue(messenger.isIncomingChannelRegistered(plugin, "foo"));
-        messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
-        assertTrue(listener.hasReceived());
+		messenger.unregisterOutgoingPluginChannel(plugin);
+		assertFalse(messenger.isOutgoingChannelRegistered(plugin, "foo"));
+		assertFalse(messenger.isOutgoingChannelRegistered(plugin, "bar"));
+	}
 
-        messenger.unregisterIncomingPluginChannel(plugin, "foo", listener);
-        listener.reset();
+	@Test
+	public void testRegisterIncomingPluginChannel() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
+		TestMessageListener listener = new TestMessageListener("foo", "bar".getBytes());
+		TestPlayer player = new TestPlayer();
+		PluginMessageListenerRegistration registration = messenger.registerIncomingPluginChannel(plugin, "foo", listener);
 
-        assertFalse(registration.isValid());
-        assertFalse(messenger.isIncomingChannelRegistered(plugin, "foo"));
-        messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
-        assertFalse(listener.hasReceived());
-    }
+		assertTrue(registration.isValid());
+		assertTrue(messenger.isIncomingChannelRegistered(plugin, "foo"));
+		messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
+		assertTrue(listener.hasReceived());
 
-    @Test(expected = ReservedChannelException.class)
-    public void testReservedIncomingRegistration() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
+		messenger.unregisterIncomingPluginChannel(plugin, "foo", listener);
+		listener.reset();
 
-        messenger.registerIncomingPluginChannel(plugin, "REGISTER", new TestMessageListener("foo", "bar".getBytes()));
-    }
+		assertFalse(registration.isValid());
+		assertFalse(messenger.isIncomingChannelRegistered(plugin, "foo"));
+		messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
+		assertFalse(listener.hasReceived());
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testDuplicateIncomingRegistration() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
-        TestMessageListener listener = new TestMessageListener("foo", "bar".getBytes());
+	@Test(expected = ReservedChannelException.class)
+	public void testReservedIncomingRegistration() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
 
-        messenger.registerIncomingPluginChannel(plugin, "baz", listener);
-        messenger.registerIncomingPluginChannel(plugin, "baz", listener);
-    }
+		messenger.registerIncomingPluginChannel(plugin, "REGISTER", new TestMessageListener("foo", "bar".getBytes()));
+	}
 
-    @Test
-    public void testUnregisterIncomingPluginChannel_Plugin_String() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
-        TestMessageListener listener1 = new TestMessageListener("foo", "bar".getBytes());
-        TestMessageListener listener2 = new TestMessageListener("baz", "qux".getBytes());
-        TestPlayer player = new TestPlayer();
-        PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin, "foo", listener1);
-        PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin, "baz", listener2);
+	@Test(expected = IllegalArgumentException.class)
+	public void testDuplicateIncomingRegistration() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
+		TestMessageListener listener = new TestMessageListener("foo", "bar".getBytes());
 
-        assertTrue(registration1.isValid());
-        assertTrue(registration2.isValid());
-        messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
-        messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
-        assertTrue(listener1.hasReceived());
-        assertTrue(listener2.hasReceived());
+		messenger.registerIncomingPluginChannel(plugin, "baz", listener);
+		messenger.registerIncomingPluginChannel(plugin, "baz", listener);
+	}
 
-        messenger.unregisterIncomingPluginChannel(plugin, "foo");
-        listener1.reset();
-        listener2.reset();
+	@Test
+	public void testUnregisterIncomingPluginChannel_Plugin_String() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
+		TestMessageListener listener1 = new TestMessageListener("foo", "bar".getBytes());
+		TestMessageListener listener2 = new TestMessageListener("baz", "qux".getBytes());
+		TestPlayer player = new TestPlayer();
+		PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin, "foo", listener1);
+		PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin, "baz", listener2);
 
-        assertFalse(registration1.isValid());
-        assertTrue(registration2.isValid());
-        messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
-        messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
-        assertFalse(listener1.hasReceived());
-        assertTrue(listener2.hasReceived());
-    }
+		assertTrue(registration1.isValid());
+		assertTrue(registration2.isValid());
+		messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
+		messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
+		assertTrue(listener1.hasReceived());
+		assertTrue(listener2.hasReceived());
 
-    @Test
-    public void testUnregisterIncomingPluginChannel_Plugin() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin = getPlugin();
-        TestMessageListener listener1 = new TestMessageListener("foo", "bar".getBytes());
-        TestMessageListener listener2 = new TestMessageListener("baz", "qux".getBytes());
-        TestPlayer player = new TestPlayer();
-        PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin, "foo", listener1);
-        PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin, "baz", listener2);
+		messenger.unregisterIncomingPluginChannel(plugin, "foo");
+		listener1.reset();
+		listener2.reset();
 
-        assertTrue(registration1.isValid());
-        assertTrue(registration2.isValid());
-        messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
-        messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
-        assertTrue(listener1.hasReceived());
-        assertTrue(listener2.hasReceived());
+		assertFalse(registration1.isValid());
+		assertTrue(registration2.isValid());
+		messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
+		messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
+		assertFalse(listener1.hasReceived());
+		assertTrue(listener2.hasReceived());
+	}
 
-        messenger.unregisterIncomingPluginChannel(plugin);
-        listener1.reset();
-        listener2.reset();
+	@Test
+	public void testUnregisterIncomingPluginChannel_Plugin() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin = getPlugin();
+		TestMessageListener listener1 = new TestMessageListener("foo", "bar".getBytes());
+		TestMessageListener listener2 = new TestMessageListener("baz", "qux".getBytes());
+		TestPlayer player = new TestPlayer();
+		PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin, "foo", listener1);
+		PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin, "baz", listener2);
 
-        assertFalse(registration1.isValid());
-        assertFalse(registration2.isValid());
-        messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
-        messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
-        assertFalse(listener1.hasReceived());
-        assertFalse(listener2.hasReceived());
-    }
+		assertTrue(registration1.isValid());
+		assertTrue(registration2.isValid());
+		messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
+		messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
+		assertTrue(listener1.hasReceived());
+		assertTrue(listener2.hasReceived());
 
-    @Test
-    public void testGetOutgoingChannels() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
+		messenger.unregisterIncomingPluginChannel(plugin);
+		listener1.reset();
+		listener2.reset();
 
-        assertEquals(messenger.getOutgoingChannels());
+		assertFalse(registration1.isValid());
+		assertFalse(registration2.isValid());
+		messenger.dispatchIncomingMessage(player, "foo", "bar".getBytes());
+		messenger.dispatchIncomingMessage(player, "baz", "qux".getBytes());
+		assertFalse(listener1.hasReceived());
+		assertFalse(listener2.hasReceived());
+	}
 
-        messenger.registerOutgoingPluginChannel(plugin1, "foo");
-        messenger.registerOutgoingPluginChannel(plugin1, "bar");
-        messenger.registerOutgoingPluginChannel(plugin2, "baz");
-        messenger.registerOutgoingPluginChannel(plugin2, "baz");
+	@Test
+	public void testGetOutgoingChannels() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
 
-        assertEquals(messenger.getOutgoingChannels(), "foo", "bar", "baz");
-    }
+		assertEquals(messenger.getOutgoingChannels());
 
-    @Test
-    public void testGetOutgoingChannels_Plugin() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
-        TestPlugin plugin3 = getPlugin();
+		messenger.registerOutgoingPluginChannel(plugin1, "foo");
+		messenger.registerOutgoingPluginChannel(plugin1, "bar");
+		messenger.registerOutgoingPluginChannel(plugin2, "baz");
+		messenger.registerOutgoingPluginChannel(plugin2, "baz");
 
-        messenger.registerOutgoingPluginChannel(plugin1, "foo");
-        messenger.registerOutgoingPluginChannel(plugin1, "bar");
-        messenger.registerOutgoingPluginChannel(plugin2, "baz");
-        messenger.registerOutgoingPluginChannel(plugin2, "qux");
+		assertEquals(messenger.getOutgoingChannels(), "foo", "bar", "baz");
+	}
 
-        assertEquals(messenger.getOutgoingChannels(plugin1), "foo", "bar");
-        assertEquals(messenger.getOutgoingChannels(plugin2), "baz", "qux");
-        assertEquals(messenger.getOutgoingChannels(plugin3));
-    }
+	@Test
+	public void testGetOutgoingChannels_Plugin() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
+		TestPlugin plugin3 = getPlugin();
 
-    @Test
-    public void testGetIncomingChannels() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
+		messenger.registerOutgoingPluginChannel(plugin1, "foo");
+		messenger.registerOutgoingPluginChannel(plugin1, "bar");
+		messenger.registerOutgoingPluginChannel(plugin2, "baz");
+		messenger.registerOutgoingPluginChannel(plugin2, "qux");
 
-        assertEquals(messenger.getIncomingChannels());
+		assertEquals(messenger.getOutgoingChannels(plugin1), "foo", "bar");
+		assertEquals(messenger.getOutgoingChannels(plugin2), "baz", "qux");
+		assertEquals(messenger.getOutgoingChannels(plugin3));
+	}
 
-        messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
-        messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
-        messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+	@Test
+	public void testGetIncomingChannels() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
 
-        assertEquals(messenger.getIncomingChannels(), "foo", "bar", "baz");
-    }
+		assertEquals(messenger.getIncomingChannels());
 
-    @Test
-    public void testGetIncomingChannels_Plugin() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
-        TestPlugin plugin3 = getPlugin();
+		messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
 
-        messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
-        messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
-        messenger.registerIncomingPluginChannel(plugin2, "qux", new TestMessageListener("foo", "bar".getBytes()));
+		assertEquals(messenger.getIncomingChannels(), "foo", "bar", "baz");
+	}
 
-        assertEquals(messenger.getIncomingChannels(plugin1), "foo", "bar");
-        assertEquals(messenger.getIncomingChannels(plugin2), "baz", "qux");
-        assertEquals(messenger.getIncomingChannels(plugin3));
-    }
+	@Test
+	public void testGetIncomingChannels_Plugin() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
+		TestPlugin plugin3 = getPlugin();
 
-    @Test
-    public void testGetIncomingChannelRegistrations_Plugin() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
-        TestPlugin plugin3 = getPlugin();
-        PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration3 = messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration4 = messenger.registerIncomingPluginChannel(plugin2, "qux", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+		messenger.registerIncomingPluginChannel(plugin2, "qux", new TestMessageListener("foo", "bar".getBytes()));
 
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin1), registration1, registration2);
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin2), registration3, registration4);
-        assertEquals(messenger.getIncomingChannels(plugin3));
-    }
+		assertEquals(messenger.getIncomingChannels(plugin1), "foo", "bar");
+		assertEquals(messenger.getIncomingChannels(plugin2), "baz", "qux");
+		assertEquals(messenger.getIncomingChannels(plugin3));
+	}
 
-    @Test
-    public void testGetIncomingChannelRegistrations_String() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
-        PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration3 = messenger.registerIncomingPluginChannel(plugin2, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration4 = messenger.registerIncomingPluginChannel(plugin2, "bar", new TestMessageListener("foo", "bar".getBytes()));
+	@Test
+	public void testGetIncomingChannelRegistrations_Plugin() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
+		TestPlugin plugin3 = getPlugin();
+		PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration3 = messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration4 = messenger.registerIncomingPluginChannel(plugin2, "qux", new TestMessageListener("foo", "bar".getBytes()));
 
-        assertEquals(messenger.getIncomingChannelRegistrations("foo"), registration1, registration3);
-        assertEquals(messenger.getIncomingChannelRegistrations("bar"), registration2, registration4);
-        assertEquals(messenger.getIncomingChannelRegistrations("baz"));
-    }
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin1), registration1, registration2);
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin2), registration3, registration4);
+		assertEquals(messenger.getIncomingChannels(plugin3));
+	}
 
-    @Test
-    public void testGetIncomingChannelRegistrations_Plugin_String() {
-        Messenger messenger = getMessenger();
-        TestPlugin plugin1 = getPlugin();
-        TestPlugin plugin2 = getPlugin();
-        TestPlugin plugin3 = getPlugin();
-        PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration3 = messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration4 = messenger.registerIncomingPluginChannel(plugin2, "bar", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration5 = messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
-        PluginMessageListenerRegistration registration6 = messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+	@Test
+	public void testGetIncomingChannelRegistrations_String() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
+		PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration3 = messenger.registerIncomingPluginChannel(plugin2, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration4 = messenger.registerIncomingPluginChannel(plugin2, "bar", new TestMessageListener("foo", "bar".getBytes()));
 
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "foo"), registration1, registration2);
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "bar"), registration3);
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin2, "bar"), registration4);
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin2, "baz"), registration5, registration6);
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "baz"));
-        assertEquals(messenger.getIncomingChannelRegistrations(plugin3, "qux"));
-    }
+		assertEquals(messenger.getIncomingChannelRegistrations("foo"), registration1, registration3);
+		assertEquals(messenger.getIncomingChannelRegistrations("bar"), registration2, registration4);
+		assertEquals(messenger.getIncomingChannelRegistrations("baz"));
+	}
 
-    private static <T> void assertEquals(Collection<T> actual, T... expected) {
-        assertThat("Size of the array", actual.size(), is(expected.length));
-        assertThat(actual, hasItems(expected));
-    }
+	@Test
+	public void testGetIncomingChannelRegistrations_Plugin_String() {
+		Messenger messenger = getMessenger();
+		TestPlugin plugin1 = getPlugin();
+		TestPlugin plugin2 = getPlugin();
+		TestPlugin plugin3 = getPlugin();
+		PluginMessageListenerRegistration registration1 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration2 = messenger.registerIncomingPluginChannel(plugin1, "foo", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration3 = messenger.registerIncomingPluginChannel(plugin1, "bar", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration4 = messenger.registerIncomingPluginChannel(plugin2, "bar", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration5 = messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+		PluginMessageListenerRegistration registration6 = messenger.registerIncomingPluginChannel(plugin2, "baz", new TestMessageListener("foo", "bar".getBytes()));
+
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "foo"), registration1, registration2);
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "bar"), registration3);
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin2, "bar"), registration4);
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin2, "baz"), registration5, registration6);
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin1, "baz"));
+		assertEquals(messenger.getIncomingChannelRegistrations(plugin3, "qux"));
+	}
 }
